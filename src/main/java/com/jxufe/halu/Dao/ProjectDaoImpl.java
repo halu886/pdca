@@ -30,8 +30,7 @@ public class ProjectDaoImpl  implements  IProjectDao{
     }
 
     public Project findProjectById(String id) {
-        mapper.findProjectById(id);
-        return null;
+        return mapper.findProjectById(id);
     }
 
     public void addProject(Project project) {
