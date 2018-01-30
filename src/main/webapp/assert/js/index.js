@@ -6,6 +6,12 @@ $(function () {
             $('#tree').treeview({data:data});
         })
     }
-    getTree()
+    // getTree()
+    
+    function parseProjectForm(projectId) {
+
+        $('#projectForm form #projectId').val('')
+        // $('')
+    }
 
 });

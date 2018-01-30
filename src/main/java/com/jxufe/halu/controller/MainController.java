@@ -19,7 +19,7 @@ public class MainController {
 
     @RequestMapping(value = "/hello",method = RequestMethod.GET)
     public String index(User user){
-        return "index";
+        return "main";
     }
 
     @RequestMapping(value = "/nice",method = RequestMethod.GET)
