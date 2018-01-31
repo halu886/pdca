@@ -1,5 +1,8 @@
 package com.jxufe.halu.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Timestamp;
 
 public class Project {
@@ -39,6 +42,8 @@ public class Project {
         this.name = name;
     }
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     public Timestamp getCreateDate() {
         return CreateDate;
     }

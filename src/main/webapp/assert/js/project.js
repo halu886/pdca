@@ -13,24 +13,42 @@ $(function () {
     }
 
     updateProject = function () {
-        $('input[name=projectName]').removeAttr('readonly');
+        $('input[name=name]').removeAttr('readonly');
+        $('input[name=createDate]').removeAttr('readonly');
         $('button.manage').removeAttr('disabled');
         $('button.update').attr('disabled', true);
         $('button.submit').attr('disabled', false);
     }
 
-    var serialiceObject =function(data){
-        var obj=new Object();
-        $.each(data,function(index,param){
-            if(!(param.name in obj)){
-                obj[param.name]=param.value;
+    showAddProject = function () {
+        $('form .project-id-group').addClass("my-none-display");
+        $('input[name=name]').removeAttr('readonly');
+        $('input[name=CreateDate]').removeAttr('readonly');
+        $('form .form-group .modify').addClass('my-none-display');
+        $('form .form-group .insert').removeClass('my-none-display');
+    }
+
+    $('#CreateDate').datetimepicker();
+
+    add = function () {
+        var formData = $('form.project').serializeArray();
+        $.ajax(
+            {
+                type:"POST",
+                url:"add",
+                data:formData,
+                datatype:'text',
+                contentType:"application/x-www-form-urlencoded",
+                success:function (data) {
+                    if(data.status){
+                        console.error(data.message);
+                    }
+                }
             }
-        });
-        return obj;
-    };
+        )
+    }
 
     submitProject = function () {
-        // var formData = serialiceObject($('form.project').serializeArray());
         var formData = $('form.project').serializeArray();
         $.ajax(
             {
@@ -40,7 +58,9 @@ $(function () {
                 datatype:'text',
                 contentType:"application/x-www-form-urlencoded",
                 success: function (data) {
-                    debugger
+                    if(data.status!='true'){
+                        console.error(data.message);
+                    }
                 }
             }
         )

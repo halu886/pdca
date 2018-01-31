@@ -16,8 +16,10 @@
     <title>PDCA</title>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="../../assert/css/bootstrap-treeview.css">
+    <link rel="stylesheet" href="../../assert/css/bootstrap-datetimepicker.min.cssz">
     <link href="../../assert/css/starter-template.css" rel="stylesheet">
     <link href="../../assert/css/index.css" rel="stylesheet">
+    <link href="../../assert/css/common.css" rel="stylesheet">
     <link href="../../assert/css/project.css" rel="stylesheet">
 </head>
 <body>
@@ -31,7 +33,7 @@
             <div class="row projectDashboard">
                 <div class="col-sm-3 col-md-3 no-left-padding-col ">
                     <div class="panel panel-default">
-                        <div class="panel-heading">任务列表</div>
+                        <div class="panel-heading"><span>任务列表</span><span class="glyphicon glyphicon-plus" aria-hidden="true" onclick="showAddProject()"></span></div>
                         <div class="panel-body zero-padding">
                             <ul class="list-group">
                                 <% List<Project> projects = (List<Project>)request.getAttribute("projects");%>
@@ -45,10 +47,10 @@
                 </div>
                 <div class="col-sm-9 col-md-9 no-left-padding-col">
                     <form class="form-horizontal project">
-                        <div class="form-group">
-                            <label for="projectId" class="col-sm-2 control-label">projectId</label>
+                        <div class="form-group project-id-group">
+                            <label for="projectID" class="col-sm-2 control-label">projectId</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="projectId" name="projectID" placeholder="projectId" readonly>
+                                <input type="text" class="form-control" id="projectID" name="projectID" placeholder="projectId" readonly>
                             </div>
                         </div>
                         <div class="form-group">
@@ -57,17 +59,20 @@
                                 <input type="text" class="form-control" id="projectName" name="name" placeholder="projectName" readonly>
                             </div>
                         </div>
-                        <%--<div class="form-group">--%>
-                            <%--<label for="createDate" class="col-sm-2 control-label">projectName</label>--%>
-                            <%--<div class="col-sm-10">--%>
-                                <%--<input type="text" class="form-control" id="createDate" name="CreateDate" placeholder="createDate" readonly>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
                         <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
+                            <label for="CreateDate" class="col-sm-2 control-label">createDate</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="CreateDate" name="CreateDate" placeholder="createDate" data-date-format="yyyy-mm-dd HH:mm:ss" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10 modify">
                                 <button type="button" class="update btn btn-default" onclick="updateProject()" disabled>修改</button>
                                 <button type="button" class="submit btn btn-default" onclick="submitProject()" disabled>保存</button>
                                 <button type="button" class="manage btn btn-default" onclick="toTask()" disabled>任务管理</button>
+                            </div>
+                            <div class="col-sm-offset-2 col-sm-10 insert my-none-display">
+                                <button type="button" class="update btn btn-default" onclick="add()" >添加</button>
                             </div>
                         </div>
                     </form>
@@ -80,5 +85,6 @@
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="../../assert/js/bootstrap-treeview.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="../../assert/js/bootstrap-datetimepicker.min.js"></script>
 <script src="../../assert/js/project.js"></script>
 </html>
