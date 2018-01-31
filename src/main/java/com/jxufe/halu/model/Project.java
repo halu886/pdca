@@ -7,11 +7,17 @@ public class Project {
     private String name;
     private Timestamp CreateDate;
 
+    public Project(){
+        super();
+    }
+
     public Project(String projectID) {
+        super();
         this.projectID = projectID;
     }
 
     public Project(String projectID, String name, Timestamp createDate) {
+        super();
         this.projectID = projectID;
         this.name = name;
         CreateDate = createDate;

@@ -9,4 +9,5 @@ public interface IProjectDao {
     public Project findProjectById(String id);
     public  void addProject(Project project);
     public List<Project>  getAllProjects();
+    public  int update(Project project);
 }

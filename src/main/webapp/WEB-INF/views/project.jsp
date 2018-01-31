@@ -18,60 +18,67 @@
     <link rel="stylesheet" href="../../assert/css/bootstrap-treeview.css">
     <link href="../../assert/css/starter-template.css" rel="stylesheet">
     <link href="../../assert/css/index.css" rel="stylesheet">
+    <link href="../../assert/css/project.css" rel="stylesheet">
 </head>
 <body>
 <%@include file="head.html"%>
-<div class="container-fluid">
+<div class="container-fluid no-padding-col">
     <div class="row">
-        <div class="col-sm-3 col-md-2">
-            <%@include file="toolbar.html"%>
+        <div class="col-sm-3 col-md-2 sidebar">
+                <%@include file="toolbar.html"%>
         </div>
-        <div class="col-sm-9 col-md-10">
-            <div class="container">
-                <div class="col-sm-3 col-md-2 ">
-                    <ul class="list-group">
-                        <% List<Project> projects = (List<Project>)request.getAttribute("projects");%>
-                        <% for (Project project:
-                                projects) {%>
-                        <li class="list-group-item" onclick="parseProjectForm(<%=project.getProjectID()%>)"><%=project.getName()%></li>
-                        <%}%>
-                    </ul>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2  no-left-padding-col">
+            <div class="row projectDashboard">
+                <div class="col-sm-3 col-md-3 no-left-padding-col ">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">任务列表</div>
+                        <div class="panel-body zero-padding">
+                            <ul class="list-group">
+                                <% List<Project> projects = (List<Project>)request.getAttribute("projects");%>
+                                <% for (Project project:
+                                        projects) {%>
+                                <li class="list-group-item" onclick="parseProjectForm('<%=project.getProjectID()%>')"><%=project.getName()%></li>
+                                <%}%>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-9 col-md-10">
-                    <form class="form-horizontal">
+                <div class="col-sm-9 col-md-9 no-left-padding-col">
+                    <form class="form-horizontal project">
                         <div class="form-group">
                             <label for="projectId" class="col-sm-2 control-label">projectId</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="projectId" placeholder="projectId" disabled>
+                                <input type="text" class="form-control" id="projectId" name="projectID" placeholder="projectId" readonly>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="projectName" class="col-sm-2 control-label">projectName</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="projectName" placeholder="projectName" disabled>
+                                <input type="text" class="form-control" id="projectName" name="name" placeholder="projectName" readonly>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="createDate" class="col-sm-2 control-label">projectName</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="createDate" placeholder="createDate" disabled>
-                            </div>
-                        </div>
+                        <%--<div class="form-group">--%>
+                            <%--<label for="createDate" class="col-sm-2 control-label">projectName</label>--%>
+                            <%--<div class="col-sm-10">--%>
+                                <%--<input type="text" class="form-control" id="createDate" name="CreateDate" placeholder="createDate" readonly>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" class="btn btn-default" >Sign in</button>
+                                <button type="button" class="update btn btn-default" onclick="updateProject()" disabled>修改</button>
+                                <button type="button" class="submit btn btn-default" onclick="submitProject()" disabled>保存</button>
+                                <button type="button" class="manage btn btn-default" onclick="toTask()" disabled>任务管理</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="../../assert/js/bootstrap-treeview.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="assert/js/index.js"></script>
+<script src="../../assert/js/project.js"></script>
 </html>

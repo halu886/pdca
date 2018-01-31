@@ -8,10 +8,6 @@ $(function () {
     }
     // getTree()
     
-    function parseProjectForm(projectId) {
 
-        $('#projectForm form #projectId').val('')
-        // $('')
-    }
 
 });

@@ -25,4 +25,8 @@ public class ProjectServiceImpl implements  IProjectService {
     public List<Project> getAllProjects() {
         return projectDao.getAllProjects();
     }
+
+    public int update(Project project){
+        return  projectDao.update(project);
+    }
 }

@@ -44,5 +44,8 @@ public class ProjectDaoImpl  implements  IProjectDao{
         return list;
     }
 
+    public int update(Project project){
+     return  mapper.update(project);
+    }
 
 }
