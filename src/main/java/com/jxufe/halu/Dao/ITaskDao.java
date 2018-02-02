@@ -9,4 +9,6 @@ public interface ITaskDao {
     public Task findTaskById(String id);
     public void addTask(Task task);
     public List<Task> getAllTasks();
+
+    List<Task> findTaskByProjectId(String projectId);
 }

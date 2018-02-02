@@ -30,7 +30,6 @@ public class LoginController {
             if(userData instanceof  User && userData.getPassword().equals(user.getPassword())){
                 map.put("userID",userData.getUserID());
                 map.put("userName",userData.getUsername());
-                request.setAttribute("projects",userService.getProjectsOfUser(user.getUserID()));
                 return new ModelAndView("main");
             } else {
                 return new ModelAndView(new RedirectView("/"));

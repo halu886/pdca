@@ -11,12 +11,19 @@ public class Task {
     private String description;
     private String ptaskId;
     private String projectId;
+    private Integer tno;
+
+    public  Task(){
+        super();
+    }
 
     public Task(String taskId) {
+        super();
         this.taskId = taskId;
     }
 
-    public Task(String taskId, String taskName, Timestamp createDate, Timestamp updateDate, String taskType, String description, String ptaskId, String projectId) {
+    public Task(String taskId, String taskName, Timestamp createDate, Timestamp updateDate, String taskType, String description, String ptaskId, String projectId, Integer tno) {
+        super();
         this.taskId = taskId;
         this.taskName = taskName;
         this.createDate = createDate;
@@ -25,7 +32,17 @@ public class Task {
         this.description = description;
         this.ptaskId = ptaskId;
         this.projectId = projectId;
+        this.tno = tno;
     }
+
+    public Integer getTno() {
+        return tno;
+    }
+
+    public void setTno(Integer tno) {
+        this.tno = tno;
+    }
+
 
     public String getTaskId() {
         return taskId;

@@ -10,4 +10,6 @@ public interface IProjectDao {
     public  void addProject(Project project);
     public List<Project>  getAllProjects();
     public  int update(Project project);
+    public void addAssoiateUser(User user,Project project);
+    public List<Project> getProjectOfUser(String id);
 }

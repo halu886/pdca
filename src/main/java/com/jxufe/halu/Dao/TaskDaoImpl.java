@@ -42,4 +42,8 @@ public class TaskDaoImpl implements ITaskDao {
         List<Task> list = mapper.getAllTasks();
         return list;
     }
+
+    public List<Task> findTaskByProjectId(String projectId) {
+        return mapper.getTaskByProjectId(projectId);
+    }
 }

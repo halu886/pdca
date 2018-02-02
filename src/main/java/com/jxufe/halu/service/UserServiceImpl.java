@@ -26,7 +26,5 @@ public class UserServiceImpl implements IUserService{
         return  userDao.getAllUsers();
     }
 
-    public List<Project> getProjectsOfUser(String id){
-        return userDao.getProjectOfUser(id);
-    }
+
 }

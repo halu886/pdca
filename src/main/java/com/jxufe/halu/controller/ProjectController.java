@@ -1,6 +1,7 @@
 package com.jxufe.halu.controller;
 
 import com.jxufe.halu.model.Project;
+import com.jxufe.halu.model.User;
 import com.jxufe.halu.service.IProjectService;
 import com.jxufe.halu.service.IUserService;
 import com.jxufe.halu.service.ProjectServiceImpl;
@@ -22,12 +23,11 @@ import java.util.*;
 @RequestMapping("/project")
 public class ProjectController {
     private IProjectService projectService = new ProjectServiceImpl();
-    private IUserService userService = new UserServiceImpl();
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(HttpSession session) {
         String userID = (String) session.getAttribute("userID");
-        List<Project> project = userService.getProjectsOfUser(userID);
+        List<Project> project = projectService.getProjectsOfUser(userID);
         return new ModelAndView("project", "projects", project);
     }
 
@@ -61,13 +61,13 @@ public class ProjectController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody
-    Map<String, Object> add(Model model, Project paramProject) {
+    Map<String, Object> add(Model model, Project paramProject,HttpSession session) {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("status", "false");
         result.put("message", "添加失败");
         Project addProject = new Project(null, paramProject.getName(), paramProject.getCreateDate());
         try {
-            projectService.addProject(addProject);
+            projectService.addProject(addProject,new User((String) session.getAttribute("userID"),null,null));
             result.put("status", "true");
             result.put("message", "添加成功");
         } catch (Exception e) {

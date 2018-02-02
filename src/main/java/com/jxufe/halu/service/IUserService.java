@@ -9,5 +9,4 @@ public interface IUserService {
     public User findUserById(String id);
     public void addUser(User user);
     public List<User> getAllUsers();
-    public List<Project> getProjectsOfUser(String id);
 }

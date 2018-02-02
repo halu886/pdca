@@ -9,5 +9,4 @@ public interface IUserDao {
     public User findUserById(String id);//查询
     public void addUser(User user);//添加
     public List<User> getAllUsers();
-    public List<Project> getProjectOfUser(String id);
 }

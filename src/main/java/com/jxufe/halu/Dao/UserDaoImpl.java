@@ -42,8 +42,6 @@ public class UserDaoImpl implements IUserDao {
         return mapper.getAllUsers();
     }
 
-    public List<Project> getProjectOfUser(String id) {
-        return mapper.getAllProject(id);
-    }
+
 
 }

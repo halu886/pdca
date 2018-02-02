@@ -16,4 +16,7 @@ public interface TaskMapper {
 
     @Select("select * from task")
     List<Task> getAllTasks();
+
+    @Select("SELECT * FROM task WHERE ProjectID = #{projectId}")
+    List<Task> getTaskByProjectId(String projectId);
 }

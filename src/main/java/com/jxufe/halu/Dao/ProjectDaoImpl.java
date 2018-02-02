@@ -48,4 +48,12 @@ public class ProjectDaoImpl  implements  IProjectDao{
      return  mapper.update(project);
     }
 
+    public void addAssoiateUser(User user,Project project){
+        mapper.addAssoiateUser(project,user);
+        session.commit();
+    }
+    public List<Project> getProjectOfUser(String id) {
+        return mapper.getProjectsOfUser(id);
+    }
+
 }

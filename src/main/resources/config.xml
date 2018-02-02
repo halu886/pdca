@@ -8,7 +8,7 @@
             <transactionManager type="JDBC"></transactionManager>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/pdca"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/pdca?useUnicode=true&amp;characterEncoding=utf-8"/>
                 <property name="username" value="root" />
                 <property name="password" value="123456"/>
             </dataSource>
@@ -18,5 +18,6 @@
     <mappers>
         <mapper class="com.jxufe.halu.Mapper.UserMapper"/>
         <mapper class="com.jxufe.halu.Mapper.ProjectMapper"/>
+        <mapper class="com.jxufe.halu.Mapper.TaskMapper"/>
     </mappers>
 </configuration>
