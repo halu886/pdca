@@ -43,6 +43,12 @@ public class TaskDaoImpl implements ITaskDao {
         return list;
     }
 
+    public int update(Task task) {
+        int row = mapper.update(task);
+        session.commit();
+        return  row;
+    }
+
     public List<Task> findTaskByProjectId(String projectId) {
         return mapper.getTaskByProjectId(projectId);
     }

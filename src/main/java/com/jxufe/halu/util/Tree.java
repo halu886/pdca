@@ -1,9 +1,13 @@
 package com.jxufe.halu.util;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.jxufe.halu.model.IBaseBean;
+import com.jxufe.halu.model.Project;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tree<T> {
+public class Tree < T extends IBaseBean>{
     private  T parentT;
     private T t;
     private List<Tree> childNodes;
@@ -49,5 +53,17 @@ public class Tree<T> {
             return this.childNodes.remove(child);
         }
         return  false;
+    }
+
+    public JSONObject toJson(){
+        JSONObject object = new JSONObject();
+        object.put("text",this.getT().getName());
+        JSONArray jsonArray = new JSONArray();
+        for(Tree tree:this.getChildNodes()){
+            jsonArray.add(tree.toJson());
+        }
+        object.put("nodes",jsonArray);
+        object.put("t",this.getT());
+        return  object;
     }
 }

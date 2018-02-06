@@ -8,6 +8,7 @@ import com.jxufe.halu.model.Task;
 import com.jxufe.halu.service.ITaskService;
 import com.jxufe.halu.util.Tree;
 
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,19 +35,36 @@ public class TaskServiceImpl implements ITaskService {
     public List<Tree<Task>> getTaskTreeByProjectId(String projectId) {
         List<Task> tasks = taskDao.findTaskByProjectId(projectId);
         List<Tree<Task>> rootTaskList = new ArrayList<Tree<Task>>();
+        List<Tree<Task>> taskList = new ArrayList<Tree<Task>>();
         for (Task task : tasks) {
-            if (task.getPtaskId() == null || task.getPtaskId().equals("")) {
-                Tree<Task> tree = new Tree<Task>(task);
-                for (Task taskChild : tasks) {
-                    if (taskChild.getPtaskId()!=null&&taskChild.getPtaskId().equals(task.getTaskId())) {
-                        tree.addChild(new Tree<Task>(task));
-                    }
+            taskList.add(new Tree<Task>(task));
+        }
+        for (Tree pNode : taskList) {
+            if (((Task) pNode.getT()).getPtaskId() == null || ((Task) pNode.getT()).getPtaskId().equals("")) {
+                rootTaskList.add(pNode);
+            }
+            for (Tree node : taskList) {
+                if (((Task) node.getT()).getPtaskId() != null && ((Task) node.getT()).getPtaskId().equals(((Task) pNode.getT()).getTaskId())) {
+                    pNode.addChild(node);
+                    node.setParentT(pNode.getT());
                 }
-                rootTaskList.add(tree);
             }
         }
         return rootTaskList;
     }
+
+    public int updateTask(Task task) {
+        Task taskFromData = taskDao.findTaskById(task.getTaskId());
+//        taskFromData.setCreateDate(tak);
+        taskFromData.setDescription(task.getDescription() instanceof String?task.getDescription():taskFromData.getDescription());
+        taskFromData.setTaskName(task.getTaskName() instanceof String?task.getTaskName():taskFromData.getTaskName());
+        if(taskFromData.getTaskType().equals("T")){
+            taskFromData.setTno(task.getTno()!=null?task.getTno():taskFromData.getTno());
+        }
+        taskFromData.setTaskType(task.getTaskType() instanceof String?task.getTaskType():taskFromData.getTaskType());
+        return taskDao.update(taskFromData);
+    }
+
 
 //    public List<>
 }

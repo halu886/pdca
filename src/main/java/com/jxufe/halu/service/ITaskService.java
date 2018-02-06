@@ -11,4 +11,5 @@ public interface ITaskService {
     public void addTask(Task task);
     public List<Task> getAllTasks();
     List<Tree<Task>> getTaskTreeByProjectId(String projectId);
+    public int updateTask(Task task);
 }

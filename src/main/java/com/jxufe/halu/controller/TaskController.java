@@ -1,5 +1,6 @@
 package com.jxufe.halu.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.jxufe.halu.model.Task;
 import com.jxufe.halu.service.ITaskService;
 import com.jxufe.halu.service.TaskServiceImpl;
@@ -35,8 +36,42 @@ public class TaskController {
 
     @RequestMapping("/tree")
     public @ResponseBody Object getTaskTreeBy(HttpSession session){
-        String projectId = (String)session.getAttribute("projectID");
-        List<Tree<Task>> taskTree =  service.getTaskTreeByProjectId(projectId);
-        return taskTree;
+        Map<String,Object> rs = new HashMap<String, Object>();
+        rs.put("data",null);
+        rs.put("status",false);
+        rs.put("message","获取失败");
+        String projectId = null;
+        try {
+            projectId = (String)session.getAttribute("projectID");
+            List<Tree<Task>> taskTree =  service.getTaskTreeByProjectId(projectId);
+            JSONArray taskJsonArray = new JSONArray();
+            for (Tree task:taskTree){
+                taskJsonArray.add(task.toJson());
+            }
+            rs.put("status",true);
+            rs.put("data",taskJsonArray);
+            rs.put("message","查询成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return  rs;
+        }
+    }
+
+    @RequestMapping("/update")
+    public @ResponseBody Map update(Task task){
+        Map<String,Object>  rs = new HashMap<String, Object>();
+        rs.put("status",false);
+//        rs.put("data",null);
+        rs.put("message","更新失败");
+        try {
+            service.updateTask(task);
+            rs.put("status",true);
+            rs.put("message","更新成功");
+        } catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return  rs;
+        }
     }
 }

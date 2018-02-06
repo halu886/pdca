@@ -2,7 +2,7 @@ package com.jxufe.halu.model;
 
 import java.sql.Timestamp;
 
-public class Task {
+public class Task implements IBaseBean {
     private String taskId;
     private String taskName;
     private Timestamp createDate;
@@ -106,5 +106,13 @@ public class Task {
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    public String getName() {
+        return this.taskName;
+    }
+
+    public String getId() {
+        return this.taskId;
     }
 }
