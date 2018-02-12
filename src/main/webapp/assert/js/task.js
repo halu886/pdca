@@ -7,11 +7,15 @@ $(function () {
             if (data.status == true) {
                 $('#taskTree').treeview({
                     data: data.data,
-                    onNodeSelected:function (e,node) {
+                    tags: ['aasd'],
+                    onNodeSelected: function (e, node) {
+                        debugger
                         renderTask(node.t);
                     }
                 });
-                // $('#taskTree li').on('click',updateTask);
+                var iconAdd = '<span class="glyphicon glyphicon-plus-sign task-add-icon"></span>'
+                $('li.list-group-item.node-taskTree').append(iconAdd);
+                $('li.node-taskTree span.task-add-icon').click(addTask);
             } else {
                 console.error(data.message)
             }
@@ -49,6 +53,22 @@ function updateTask() {
             }
         }
     )
+}
+
+function renderAddForm(t) {
+    $('form').addClass('my-none-display');
+    if (t.taskType === 'T') {
+        $('form.task-add-t').removeClass('my-none-display');
+    } else {
+        $('form.task-add-tChild').removeClass('my-none-display');
+    }
+}
+
+addTask =function (event) {
+    var nodeId = $(this).parent().attr("data-nodeid");
+    var node = $('#taskTree').treeview('getNode', nodeId);;
+    renderAddForm(node.t);
+    event.stopPropagation();
 }
 
 function submitTask() {
