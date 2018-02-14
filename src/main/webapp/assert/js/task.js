@@ -71,6 +71,26 @@ addTask =function (event) {
     event.stopPropagation();
 }
 
-function submitTask() {
+function submitTaskAdd() {
+    var taskTType = $('task-add-t').serializeArray();
+    $.ajax(
+        {
+            type: "POST",
+            url: 'add/t',
+            data: taskTType,
+            datatype: 'text',
+            contentType: "application/x-www-form-urlencoded",
+            success: function (data) {
+                if (data.status != 'true') {
+                    console.error(data.message);
+                } else {
+                    window.location.href = "task/index";
+                }
+            }
+        }
+    )
+}
 
+function submitTask() {
+    
 }

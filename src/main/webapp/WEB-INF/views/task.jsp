@@ -67,100 +67,92 @@
                     </form>
                     <form class="form-horizontal task-add-t my-none-display" >
                         <div class="form-group">
-                            <label for="PTaskID" class="col-sm-2 constrol-lable">PTaskID</label>
+                            <label for="PTaskID" class="col-sm-2 constrol-lable">pTaskId</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="PTaskID" name="pTaskId" readonly>
+                                <input type="text" class="form-control" id="PTaskID" name="pTaskId" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="PTypeTaskName" class="col-sm-2 constrol-lable">PTaskID</label>
+                            <label for="PTypeTaskName" class="col-sm-2 constrol-lable">pTypeTaskName</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="PTypeTaskName" name="pTypeTaskName"
-                                       readonly>
+                                       >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="PTypeTaskDescription" class="col-sm-2 constrol-lable">PTaskID</label>
+                            <label for="PTypeTaskDescription" class="col-sm-2 constrol-lable">pTypeTaskName</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="PTypeTaskDescription" name="pTypeTaskName"
-                                       readonly>
+                                <input type="text" class="form-control" id="PTypeTaskDescription" name="pTypeTaskDescription"
+                                       >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="PTypeTaskPrograss" class="col-sm-2 constrol-lable">PTaskID</label>
+                            <label for="PTypeTaskProgress" class="col-sm-2 constrol-lable">pTypeTaskProgress</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="PTypeTaskPrograss" name="pTypeTaskPrograss"
-                                       readonly>
+                                <input type="text" class="form-control" id="PTypeTaskProgress" name="pTypeTaskProgress"
+                                       >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="DTypeTaskName" class="col-sm-2 constrol-lable">PTaskID</label>
+                            <label for="DTypeTaskName" class="col-sm-2 constrol-lable">dTypeTaskName</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="DTypeTaskName" name="dTypeTaskName"
-                                       readonly>
+                                       >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="DTypeTaskDescription" class="col-sm-2 constrol-lable">PTaskID</label>
+                            <label for="DTypeTaskDescription" class="col-sm-2 constrol-lable">dTypeTaskName</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="DTypeTaskDescription" name="dTypeTaskName"
-                                       readonly>
+                                       >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="DTypeTaskPrograss" class="col-sm-2 constrol-lable">PTaskID</label>
+                            <label for="DTypeTaskProgress" class="col-sm-2 constrol-lable">dTypeTaskProgress</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="DTypeTaskPrograss" name="dTypeTaskPrograss"
-                                       readonly>
+                                <input type="text" class="form-control" id="DTypeTaskProgress" name="dTypeTaskProgress"
+                                       >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="CTypeTaskName" class="col-sm-2 constrol-lable">PTaskID</label>
+                            <label for="CTypeTaskName" class="col-sm-2 constrol-lable">cTypeTaskName</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="CTypeTaskName" name="cTypeTaskName"
-                                       readonly>
+                                       >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="CTypeTaskDescription" class="col-sm-2 constrol-lable">PTaskID</label>
+                            <label for="CTypeTaskDescription" class="col-sm-2 constrol-lable">cTypeTaskName</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="CTypeTaskDescription" name="cTypeTaskName"
-                                       readonly>
+                                       >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="CTypeTaskPrograss" class="col-sm-2 constrol-lable">PTaskID</label>
+                            <label for="CTypeTaskProgress" class="col-sm-2 constrol-lable">cTypeTaskProgress</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="CTypeTaskPrograss" name="cTypeTaskPrograss"
-                                       readonly>
+                                <input type="text" class="form-control" id="CTypeTaskProgress" name="cTypeTaskProgress"
+                                       >
                             </div>
                         </div>
+                        <%--<div class="form-group">--%>
+                            <%--<label for="CTypeTaskProgress" class="col-sm-2 constrol-lable">cTypeTaskProgress</label>--%>
+                            <%--<div class="col-sm-10">--%>
+                                <%--<input type="text" class="form-control" id="CTypeTaskProgress" name="cTypeTaskProgress"--%>
+                                       <%-->--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                         <div class="form-group">
-                            <label for="DTypeTaskPrograss" class="col-sm-2 constrol-lable">PTaskID</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="DTypeTaskPrograss" name="dTypeTaskPrograss"
-                                       readonly>
+                            <div class="col-sm-offset-2 col-sm-10 modify">
+                                <button type="button" class="update btn btn-default" onclick="submitTaskAdd()" disabled>
+                                    提交
+                                </button>
+                                <button type="button" class="update btn btn-default" onclick="updateTask()" disabled>
+                                    清空
+                                </button>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="ATypeTaskName" class="col-sm-2 constrol-lable">PTaskID</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="ATypeTaskName" name="aTypeTaskName"
-                                       readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="ATypeTaskDescription" class="col-sm-2 constrol-lable">PTaskID</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="ATypeTaskDescription" name="aTypeTaskName"
-                                       readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="ATypeTaskPrograss" class="col-sm-2 constrol-lable">PTaskID</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="ATypeTaskPrograss" name="aTypeTaskPrograss"
-                                       readonly>
+                            <div class="col-sm-offset-2 col-sm-10 insert my-none-display">
+                                <button type="button" class="update btn btn-default" onclick="add()">添加</button>
                             </div>
                         </div>
                     </form>

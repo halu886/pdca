@@ -11,6 +11,7 @@ import com.jxufe.halu.util.Tree;
 import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TaskServiceImpl implements ITaskService {
 
@@ -63,6 +64,11 @@ public class TaskServiceImpl implements ITaskService {
         }
         taskFromData.setTaskType(task.getTaskType() instanceof String?task.getTaskType():taskFromData.getTaskType());
         return taskDao.update(taskFromData);
+    }
+
+    @Override
+    public void addTaskByType(Map body, String type) {
+
     }
 
 

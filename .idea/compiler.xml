@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <file url="file://$PROJECT_DIR$/src/main/java/com/jxufe/halu/controller/TaskController.java" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -9,8 +12,8 @@
         <module name="PDCA" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="PDCA" target="1.5" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="PDCA" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
