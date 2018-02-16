@@ -1,6 +1,7 @@
 package com.jxufe.halu.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.jxufe.halu.model.Project;
 import com.jxufe.halu.model.Task;
 import com.jxufe.halu.service.ITaskService;
 import com.jxufe.halu.service.TaskServiceImpl;
@@ -78,11 +79,17 @@ public class TaskController {
 
     @RequestMapping("/add/:type")
     public @ResponseBody
-    Map addTask(@RequestBody Map body, @Param("type") String type) {
+    Map addTask(@RequestBody Map body, @Param("type") String type,HttpSession session) {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("status", false);
         result.put("message", "添加失败");
         try {
+            Project  project = (Project)session.getAttribute("project");
+            String childNameKey = "taskName";
+            String childDescription = "description";
+            String childPTaskId = "pTaskId";
+            Task typeTask = new Task();
+            int increateRs = 0;
             switch (type) {
                 case "t":
                     String nameKey = "TypeTaskName";
@@ -100,12 +107,37 @@ public class TaskController {
                         task.setDescription((String)body.get(description));
                         task.setTaskType(typeList[i]);
                         task.setProjectId(pTaskId);
-//                        task.set
                         taskList.add(task);
+                    }
+                    increateRs =  service.increateTypeTask(taskList);
+                    if(increateRs != 4){
+                        throw  new Exception("添加确实");
+                    }
+                    break;
+                case "p":
+                    typeTask.setTaskType("t");
+                    typeTask.setDescription((body.get(childDescription) == null)?"":(String) body.get(childNameKey));
+                    typeTask.setTaskName((String) body.get(childNameKey));
+                    typeTask.setProjectId(project.getProjectID());
+                    typeTask.setPtaskId((String)body.get(childPTaskId));
+                    increateRs= service.increateStepTask(typeTask);
+                    if(increateRs != 1){
+                        throw new Exception("增加异常");
+                    }
+                    break;
+                case "d":
+                    Task task = new Task();
+                    task.setTaskType("t");
+                    task.setDescription((body.get(childDescription) == null)?"":(String) body.get(childNameKey));
+                    task.setTaskName((String) body.get(childNameKey));
+                    task.setProjectId(project.getProjectID());
+                    task.setPtaskId((String)body.get(childPTaskId));
+                    increateRs= service.increateStepTask(task);
+                    if(increateRs != 1){
+                        throw new Exception("增加异常");
                     }
                     break;
             }
-            service.addTaskByType(body, type);
         } catch (Exception e) {
             e.printStackTrace();
             result.put("message", "添加异常");
