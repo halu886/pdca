@@ -11,4 +11,5 @@ public interface ITaskDao {
     public List<Task> getAllTasks();
     public int update(Task task);
     List<Task> findTaskByProjectId(String projectId);
+    public int insertBatch(List<Task> taskList);
 }

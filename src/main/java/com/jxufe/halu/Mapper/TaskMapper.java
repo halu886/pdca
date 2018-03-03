@@ -2,6 +2,7 @@ package com.jxufe.halu.Mapper;
 
 import com.jxufe.halu.model.Task;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -23,4 +24,7 @@ public interface TaskMapper {
 
     @Update("UPDATE task SET TaskName =#{taskName},TaskType=#{taskType},Description=#{description},Tno=#{tno} WHERE TaskID=#{taskId}")
     int update(Task task);
+
+    @InsertProvider(type = TaskMapperProvider.class,method = "insertBatch")
+    int insertBatch(List<Task> taskList);
 }

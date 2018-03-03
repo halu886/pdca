@@ -11,8 +11,8 @@ public interface ITaskService {
     public Task findTaskById(String id);
     public void addTask(Task task);
     public List<Task> getAllTasks();
-    List<Tree<Task>> getTaskTreeByProjectId(String projectId);
+    public List<Tree<Task>> getTaskTreeByProjectId(String projectId);
     public int updateTask(Task task);
-
-    void addTaskByType(Map body, String type);
+    public int increateTypeTask(List<Task> taskList) throws Exception;
+    public int increateStepTask(Task typeTask);
 }

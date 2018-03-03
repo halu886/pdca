@@ -25,10 +25,11 @@ public class TaskController {
 
     private ITaskService service = new TaskServiceImpl();
 
-    @RequestMapping("/index")
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
     public ModelAndView toIndex(
-            @RequestParam("projectID") String projeceId,
-            ModelMap map) {
+            @RequestParam("projectId") String projeceId,
+            ModelMap map
+    ) {
         map.put("projectID", projeceId);
         return new ModelAndView("task");
     }
@@ -111,7 +112,7 @@ public class TaskController {
                     }
                     increateRs =  service.increateTypeTask(taskList);
                     if(increateRs != 4){
-                        throw  new Exception("添加确实");
+                        throw  new Exception("添加异常");
                     }
                     break;
                 case "p":
@@ -126,13 +127,34 @@ public class TaskController {
                     }
                     break;
                 case "d":
-                    Task task = new Task();
-                    task.setTaskType("t");
-                    task.setDescription((body.get(childDescription) == null)?"":(String) body.get(childNameKey));
-                    task.setTaskName((String) body.get(childNameKey));
-                    task.setProjectId(project.getProjectID());
-                    task.setPtaskId((String)body.get(childPTaskId));
-                    increateRs= service.increateStepTask(task);
+                    typeTask.setTaskType("t");
+                    typeTask.setDescription((body.get(childDescription) == null)?"":(String) body.get(childNameKey));
+                    typeTask.setTaskName((String) body.get(childNameKey));
+                    typeTask.setProjectId(project.getProjectID());
+                    typeTask.setPtaskId((String)body.get(childPTaskId));
+                    increateRs= service.increateStepTask(typeTask);
+                    if(increateRs != 1){
+                        throw new Exception("增加异常");
+                    }
+                    break;
+                case "c":
+                    typeTask.setTaskType("t");
+                    typeTask.setDescription((body.get(childDescription) == null)?"":(String) body.get(childNameKey));
+                    typeTask.setTaskName((String) body.get(childNameKey));
+                    typeTask.setProjectId(project.getProjectID());
+                    typeTask.setPtaskId((String)body.get(childPTaskId));
+                    increateRs= service.increateStepTask(typeTask);
+                    if(increateRs != 1){
+                        throw new Exception("增加异常");
+                    }
+                    break;
+                case "a":
+                    typeTask.setTaskType("t");
+                    typeTask.setDescription((body.get(childDescription) == null)?"":(String) body.get(childNameKey));
+                    typeTask.setTaskName((String) body.get(childNameKey));
+                    typeTask.setProjectId(project.getProjectID());
+                    typeTask.setPtaskId((String)body.get(childPTaskId));
+                    increateRs= service.increateStepTask(typeTask);
                     if(increateRs != 1){
                         throw new Exception("增加异常");
                     }
@@ -144,6 +166,5 @@ public class TaskController {
         } finally {
             return result;
         }
-
     }
 }

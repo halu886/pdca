@@ -13,7 +13,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.7">
-      <module name="PDCA" target="1.7" />
+      <module name="PDCA" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

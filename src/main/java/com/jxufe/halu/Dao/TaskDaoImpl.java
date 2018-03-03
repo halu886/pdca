@@ -2,6 +2,7 @@ package com.jxufe.halu.Dao;
 
 import com.jxufe.halu.Mapper.TaskMapper;
 import com.jxufe.halu.model.Task;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -51,5 +52,10 @@ public class TaskDaoImpl implements ITaskDao {
 
     public List<Task> findTaskByProjectId(String projectId) {
         return mapper.getTaskByProjectId(projectId);
+    }
+
+    @Override
+    public int insertBatch(List<Task> taskList) {
+        return mapper.insertBatch(taskList);
     }
 }

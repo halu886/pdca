@@ -66,9 +66,18 @@ public class TaskServiceImpl implements ITaskService {
         return taskDao.update(taskFromData);
     }
 
-    @Override
-    public void addTaskByType(Map body, String type) {
 
+    @Override
+    public int increateTypeTask(List<Task> taskList) throws Exception {
+        if(taskList.size()!=4){
+            throw new Exception("参数异常");
+        }
+        return taskDao.insertBatch(taskList);
+    }
+
+    @Override
+    public int increateStepTask(Task typeTask) {
+        return 0;
     }
 
 
