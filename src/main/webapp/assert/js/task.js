@@ -3,19 +3,19 @@ $(function () {
     function init() {
         $('.sidebar .active').removeClass('active');
         $('.sidebar .nav-sidebar:nth-child(1) li:nth-child(3)').addClass('active');
+        $('.my-datetimepicker').datetimepicker();
         $.get('tree', function (data) {
             if (data.status == true) {
                 $('#taskTree').treeview({
                     data: data.data,
                     tags: ['aasd'],
                     onNodeSelected: function (e, node) {
-                        debugger
                         renderTask(node.t);
                     }
                 });
                 var iconAdd = '<span class="glyphicon glyphicon-plus-sign task-add-icon"></span>'
                 $('li.list-group-item.node-taskTree').append(iconAdd);
-                $('li.node-taskTree span.task-add-icon').click(addTask);
+                $('li.node-taskTree span.task-add-icon').click(addTaskHandler);
             } else {
                 console.error(data.message)
             }
@@ -32,7 +32,8 @@ function renderTask(task) {
     $('input[name=taskId]').val(task.id);
     $('input[name=taskName]').removeAttr('readonly');
     $('input[name=description]').removeAttr('readonly');
-    $('button.update').attr('disabled', false);
+    $('.task-add-t button.update').attr('disabled', false);
+    $('.task-add-t button.clear').attr('disabled',false)
 }
 
 function updateTask() {
@@ -64,15 +65,47 @@ function renderAddForm(t) {
     }
 }
 
-addTask =function (event) {
+addTaskHandler =function (event) {
     var nodeId = $(this).parent().attr("data-nodeid");
     var node = $('#taskTree').treeview('getNode', nodeId);;
-    renderAddForm(node.t);
+    renderAddForm.call(this,node.t);
     event.stopPropagation();
 }
 
-function submitTaskAdd() {
-    var taskTType = $('task-add-t').serializeArray();
+function validTypeTask(task) {
+    var typeTaskList = ['a','b','c','d'];
+    var progressValid ={
+        name:'TypeTaskProgress',
+        value: 100,
+    };
+    try {
+        var nodeId = $(this).parent().attr("data-nodeid");
+        var  itemSelected = $('#taskTree').treeview('getNode',nodeId);
+        var preEndDate = itemSelected.t.startDate;
+        var progressTotal = 0;
+        for (var type in typeTaskList){
+            progressTotal += parseInt(task[type+progressValid.name]);//to do
+            var startDate = task[type+'TypeStartDate'];
+            var endDate = task[type + 'TypeEndDate'];
+            if(preEndDate>= startDate)
+                return false;
+            preEndDate = endDate;
+        }
+        if(progressTotal !== 100||(itemSelected.t.endDate !=null && preEndDate>=itemSelected.t.endDate)){
+            return false;
+        }
+        return true;
+    }catch (e){
+        console.error(e.stack);
+        return false;
+    }
+}
+
+function addTask() {
+    var taskTType = $('.task-add-t').serializeObject();
+    if(!validTypeTask.call(this,taskTType)){
+        alert('参数异常');
+    }
     $.ajax(
         {
             type: "POST",
@@ -92,5 +125,4 @@ function submitTaskAdd() {
 }
 
 function submitTask() {
-    
 }

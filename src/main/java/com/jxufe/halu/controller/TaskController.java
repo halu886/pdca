@@ -27,10 +27,10 @@ public class TaskController {
 
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public ModelAndView toIndex(
-            @RequestParam("projectId") String projeceId,
+            @RequestParam("projectID") String projectId,
             ModelMap map
     ) {
-        map.put("projectID", projeceId);
+        map.put("projectID", projectId);
         return new ModelAndView("task");
     }
 
@@ -95,7 +95,6 @@ public class TaskController {
                 case "t":
                     String nameKey = "TypeTaskName";
                     String descriptionKey = "TypeTaskDescription";
-                    String TypeTaskPrograss = "TypeTaskPrograss";
                     String[] typeList = {"p", "d", "c", "a"};
                     String pTaskId = (String) body.get("pTaskId");
                     List<Task> taskList =new ArrayList<Task>();
@@ -103,7 +102,6 @@ public class TaskController {
                         Task task = new Task();
                         String name = typeList[i]+nameKey;
                         String description =  typeList[i]+descriptionKey;
-                        String progress = typeList[i]+TypeTaskPrograss;
                         task.setTaskName((String) body.get(name));
                         task.setDescription((String)body.get(description));
                         task.setTaskType(typeList[i]);

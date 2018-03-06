@@ -67,112 +67,175 @@
                     </form>
                     <form class="form-horizontal task-add-t my-none-display" >
                         <div class="form-group">
-                            <label for="PTaskID" class="col-sm-2 constrol-lable">pTaskId</label>
+                            <label  class="col-sm-2 constrol-lable">pTypeTaskName</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="PTaskID" name="pTaskId" >
+                                <input type="text" class="form-control"  name="pTypeTaskName">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="PTypeTaskName" class="col-sm-2 constrol-lable">pTypeTaskName</label>
+                            <label  class="col-sm-2 constrol-lable">pTypeTaskDescription</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="PTypeTaskName" name="pTypeTaskName"
+                                <input type="text" class="form-control"  name="pTypeTaskDescription"
                                        >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="PTypeTaskDescription" class="col-sm-2 constrol-lable">pTypeTaskName</label>
+                            <label  class="col-sm-2 constrol-lable">pTypeTaskProgress</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="PTypeTaskDescription" name="pTypeTaskDescription"
+                                <input type="text" class="form-control"  name="pTypeTaskProgress"
                                        >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="PTypeTaskProgress" class="col-sm-2 constrol-lable">pTypeTaskProgress</label>
+                            <label  class="col-sm-2 constrol-lable">startDate</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="PTypeTaskProgress" name="pTypeTaskProgress"
+                                <input type="text" class="form-control my-datetimepicker"  name="pTypeStartDate"
+                                       placeholder="startDate" data-date-format="yyyy-mm-dd HH:mm:ss">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 constrol-lable">endDate</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control my-datetimepicker"  name="pTypeEndDate"
+                                       placeholder="endDate" data-date-format="yyyy-mm-dd HH:mm:ss">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 constrol-lable">dTypeTaskName</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"  name="dTypeTaskName"
                                        >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="DTypeTaskName" class="col-sm-2 constrol-lable">dTypeTaskName</label>
+                            <label  class="col-sm-2 constrol-lable">dTypeTaskDescription</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="DTypeTaskName" name="dTypeTaskName"
+                                <input type="text" class="form-control"  name="dTypeTaskDescription"
                                        >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="DTypeTaskDescription" class="col-sm-2 constrol-lable">dTypeTaskName</label>
+                            <label  class="col-sm-2 constrol-lable">dTypeTaskProgress</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="DTypeTaskDescription" name="dTypeTaskName"
+                                <input type="text" class="form-control"  name="dTypeTaskProgress"
                                        >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="DTypeTaskProgress" class="col-sm-2 constrol-lable">dTypeTaskProgress</label>
+                            <label  class="col-sm-2 constrol-lable">startDate</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="DTypeTaskProgress" name="dTypeTaskProgress"
+                                <input type="text" class="form-control my-datetimepicker"  name="dTypeStartDate"
+                                       placeholder="startDate" data-date-format="yyyy-mm-dd HH:mm:ss">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 constrol-lable">endDate</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control my-datetimepicker"  name="dTypeEndDate"
+                                       placeholder="endDate" data-date-format="yyyy-mm-dd HH:mm:ss">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 constrol-lable">cTypeTaskName</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"  name="cTypeTaskName"
                                        >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="CTypeTaskName" class="col-sm-2 constrol-lable">cTypeTaskName</label>
+                            <label  class="col-sm-2 constrol-lable">cTypeTaskDescription</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="CTypeTaskName" name="cTypeTaskName"
+                                <input type="text" class="form-control"  name="cTypeTaskDescription"
                                        >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="CTypeTaskDescription" class="col-sm-2 constrol-lable">cTypeTaskName</label>
+                            <label  class="col-sm-2 constrol-lable">cTypeTaskProgress</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="CTypeTaskDescription" name="cTypeTaskName"
+                                <input type="text" class="form-control"  name="cTypeTaskProgress"
                                        >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="CTypeTaskProgress" class="col-sm-2 constrol-lable">cTypeTaskProgress</label>
+                            <label  class="col-sm-2 constrol-lable">startDate</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="CTypeTaskProgress" name="cTypeTaskProgress"
-                                       >
+                                <input type="text" class="form-control my-datetimepicker"  name="cTypeStartDate"
+                                       placeholder="startDate" data-date-format="yyyy-mm-dd HH:mm:ss">
                             </div>
                         </div>
-                        <%--<div class="form-group">--%>
-                            <%--<label for="CTypeTaskProgress" class="col-sm-2 constrol-lable">cTypeTaskProgress</label>--%>
-                            <%--<div class="col-sm-10">--%>
-                                <%--<input type="text" class="form-control" id="CTypeTaskProgress" name="cTypeTaskProgress"--%>
-                                       <%-->--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
+                        <div class="form-group">
+                            <label  class="col-sm-2 constrol-lable">endDate</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control my-datetimepicker"  name="cTypeEndDate"
+                                       placeholder="endDate" data-date-format="yyyy-mm-dd HH:mm:ss">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 constrol-lable">aTypeTaskName</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"  name="aTypeTaskName"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 constrol-lable">aTypeTaskDescription</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"  name="aTypeTaskDescription"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 constrol-lable">aTypeTaskProgress</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"  name="aTypeTaskProgress"
+                                >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 constrol-lable">startDate</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control my-datetimepicker"  name="aTypeStartDate"
+                                       placeholder="startDate" data-date-format="yyyy-mm-dd HH:mm:ss">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 constrol-lable">endDate</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control my-datetimepicker"  name="aTypeEndDate"
+                                       placeholder="endDate" data-date-format="yyyy-mm-dd HH:mm:ss">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10 modify">
-                                <button type="button" class="update btn btn-default" onclick="submitTaskAdd()" disabled>
+                                <button type="button" class="update btn btn-default" onclick="addTask()" >
                                     提交
                                 </button>
-                                <button type="button" class="update btn btn-default" onclick="updateTask()" disabled>
+                                <button type="button" class="clear btn btn-default" onclick="updateTask()">
                                     清空
                                 </button>
                             </div>
                             <div class="col-sm-offset-2 col-sm-10 insert my-none-display">
-                                <button type="button" class="update btn btn-default" onclick="add()">添加</button>
+                                <button type="button" class="add btn btn-default" onclick="add()">添加</button>
                             </div>
                         </div>
                     </form>
                     <form class="form-horizontal task-add-tChild my-none-display">
                         <div class="form-group">
-                            <label for="PTaskName" class=" col-sm-2 control-lable">taskName</label>
+                            <label class=" col-sm-2 control-lable">taskName</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="PTaskName" name="pTaskName" readonly>
+                                <input type="text" class="form-control"  name="pTaskName" readonly>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="TaskName" class=" col-sm-2 control-lable">taskName</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="TaskName" name="taskName" readonly>
+                                <input type="text" class="form-control"  name="taskName" readonly>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="Description" class="col-sm-2  control-lable">Description</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="Description" name="description" readonly>
+                                <input type="text" class="form-control"  name="description" readonly>
                             </div>
                         </div>
                         <div class="form-group">
@@ -191,6 +254,7 @@
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../../assert/js/bootstrap-treeview.js"></script>
+<script src="../../assert/js/common.js"></script>
 <script src="../../assert/js/task.js"></script>
 <script src="../../assert/js/bootstrap-datetimepicker.min.js"></script>
 </html>
