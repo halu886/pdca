@@ -1,3 +1,4 @@
+var _this = {};
 $(function () {
 
     function init() {
@@ -33,7 +34,7 @@ function renderTask(task) {
     $('input[name=taskName]').removeAttr('readonly');
     $('input[name=description]').removeAttr('readonly');
     $('.task-add-t button.update').attr('disabled', false);
-    $('.task-add-t button.clear').attr('disabled',false)
+    $('.task-add-t button.clear').attr('disabled', false)
 }
 
 function updateTask() {
@@ -65,63 +66,106 @@ function renderAddForm(t) {
     }
 }
 
-addTaskHandler =function (event) {
+addTaskHandler = function (event) {
     var nodeId = $(this).parent().attr("data-nodeid");
-    var node = $('#taskTree').treeview('getNode', nodeId);;
-    renderAddForm.call(this,node.t);
+    var node = $('#taskTree').treeview('getNode', nodeId);
+    _this.item = node;
+    renderAddForm.call(this, node.t);
     event.stopPropagation();
 }
 
 function validTypeTask(task) {
-    var typeTaskList = ['a','b','c','d'];
-    var progressValid ={
-        name:'TypeTaskProgress',
+    var typeTaskList = ['a', 'b', 'c', 'd'];
+    var progressValid = {
+        name: 'TypeTaskProgress',
         value: 100,
     };
     try {
-        var nodeId = $(this).parent().attr("data-nodeid");
-        var  itemSelected = $('#taskTree').treeview('getNode',nodeId);
-        var preEndDate = itemSelected.t.startDate;
+        var itemSelected = $.extend(true, {}, _this.item);
+        var preEndDate = new Date(itemSelected.t.startDate);
+        preEndDate = preEndDate.valueOf();
         var progressTotal = 0;
-        for (var type in typeTaskList){
-            progressTotal += parseInt(task[type+progressValid.name]);//to do
-            var startDate = task[type+'TypeStartDate'];
+        for (var index in typeTaskList) {
+            var type = typeTaskList[index];
+            progressTotal += parseInt(task[type + progressValid.name]);//to do
+            var startDate = task[type + 'TypeStartDate'];
             var endDate = task[type + 'TypeEndDate'];
-            if(preEndDate>= startDate)
+            if (Date.parse(preEndDate) >= Date.parse(startDate))
                 return false;
             preEndDate = endDate;
         }
-        if(progressTotal !== 100||(itemSelected.t.endDate !=null && preEndDate>=itemSelected.t.endDate)){
+        endDate = (new Date(itemSelected.t.endDate)).valueOf();
+        if (progressTotal !== 100 || (itemSelected.t.endDate != null && Date.parse(preEndDate) >= Date.parse(startDate))) {
             return false;
         }
         return true;
-    }catch (e){
+    } catch (e) {
         console.error(e.stack);
         return false;
     }
 }
 
-function addTask() {
-    var taskTType = $('.task-add-t').serializeObject();
-    if(!validTypeTask.call(this,taskTType)){
-        alert('参数异常');
+function validTask(task) {
+    var selectItem = $.extend(true, {}, _this.item);
+    if (Date.parse(task.startDate) > Date.parse(task.endDate) || selectItem.t.startDate > Date.parse(task.startDate) ||  selectItem.t.endDate < Date.parse(task.endDate)) {
+        return false;
     }
-    $.ajax(
-        {
-            type: "POST",
-            url: 'add/t',
-            data: taskTType,
-            datatype: 'text',
-            contentType: "application/x-www-form-urlencoded",
-            success: function (data) {
-                if (data.status != 'true') {
-                    console.error(data.message);
-                } else {
-                    window.location.href = "task/index";
+    return true;
+}
+
+function addTask(button) {
+    var task = $(button).parents('form').serializeObject();
+    var itemSelected = $.extend(true, {}, _this.item);
+    if (itemSelected.t.taskType === 'T') {
+        if (!validTypeTask(task)) {
+            alert('参数异常');
+        }
+        if (itemSelected.nodes instanceof Array && itemSelected.nodes.length != 0) {
+            alert('该任务已不允许添加类型任务')
+            return;
+        }
+        // var task = JSON.parse('{"pTypeTaskName":"1","pTypeTaskDescription":"1","pTypeTaskProgress":"20","pTypeStartDate":"2018-03-08 09:03:44","pTypeEndDate":"2018-03-09 09:03:44","dTypeTaskName":"2","dTypeTaskDescription":"2","dTypeTaskProgress":"30","dTypeStartDate":"2018-03-11 09:03:45","dTypeEndDate":"2018-03-12 09:03:45","cTypeTaskName":"3","cTypeTaskDescription":"3","cTypeTaskProgress":"30","cTypeStartDate":"2018-03-14 09:03:45","cTypeEndDate":"2018-03-15 09:03:45","aTypeTaskName":"4","aTypeTaskDescription":"4","aTypeTaskProgress":"20","aTypeStartDate":"2018-03-16 09:03:45","aTypeEndDate":"2018-03-17 09:03:45"}');
+        task.pTaskId = itemSelected.t.id;
+        $.ajax(
+            {
+                type: "POST",
+                url: 'add/t',
+                data: JSON.stringify(task),
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (data) {
+                    if (data.status != true) {
+                        console.error(data.message);
+                    } else {
+                        window.location.href = "index";
+                    }
                 }
             }
+        )
+    } else {
+        if (!validTask(task)) {
+            alert("任务校验失败");
+            return;
         }
-    )
+        task.pTaskId = itemSelected.t.id;
+        $.ajax(
+            {
+                type: "POST",
+                url: 'add/' + itemSelected.t.taskType,
+                data: JSON.stringify(task),
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (data) {
+                    if (data.status != true) {
+                        console.error(data.message);
+                    } else {
+                        // window.location.href = "index";
+                    }
+                }
+            }
+        )
+
+    }
 }
 
 function submitTask() {

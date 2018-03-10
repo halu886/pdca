@@ -18,14 +18,14 @@ public class TaskDaoImpl implements ITaskDao {
     private SqlSession session;
     private TaskMapper mapper;
 
-    public TaskDaoImpl(){
+    public TaskDaoImpl() {
         String resource = "config.xml";
         try {
             Reader reader = Resources.getResourceAsReader(resource);
             sessionFactory = new SqlSessionFactoryBuilder().build(reader);
             session = sessionFactory.openSession();
             mapper = session.getMapper(TaskMapper.class);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -47,7 +47,7 @@ public class TaskDaoImpl implements ITaskDao {
     public int update(Task task) {
         int row = mapper.update(task);
         session.commit();
-        return  row;
+        return row;
     }
 
     public List<Task> findTaskByProjectId(String projectId) {
@@ -56,6 +56,13 @@ public class TaskDaoImpl implements ITaskDao {
 
     @Override
     public int insertBatch(List<Task> taskList) {
-        return mapper.insertBatch(taskList);
+        int rs = mapper.insertBatch(taskList);
+        session.commit();
+        return rs;
+    }
+
+    @Override
+    public int countChildById(String id) {
+        return mapper.countChildById(id);
     }
 }

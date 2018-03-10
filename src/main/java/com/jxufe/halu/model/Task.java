@@ -9,7 +9,7 @@ public class Task implements IBaseBean {
     private Timestamp updateDate;
     private String taskType;
     private String description;
-    private String ptaskId;
+    private String pTaskId;
     private String projectId;
     private Integer tno;
     private Timestamp startDate;
@@ -48,7 +48,7 @@ public class Task implements IBaseBean {
         this.updateDate = updateDate;
         this.taskType = taskType;
         this.description = description;
-        this.ptaskId = ptaskId;
+        this.pTaskId = ptaskId;
         this.projectId = projectId;
         this.tno = tno;
     }
@@ -110,12 +110,12 @@ public class Task implements IBaseBean {
         this.description = description;
     }
 
-    public String getPtaskId() {
-        return ptaskId;
+    public String getPTaskId() {
+        return pTaskId;
     }
 
-    public void setPtaskId(String ptaskId) {
-        this.ptaskId = ptaskId;
+    public void setPTaskId(String ptaskId) {
+        this.pTaskId= ptaskId;
     }
 
     public String getProjectId() {

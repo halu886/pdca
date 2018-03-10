@@ -18,9 +18,9 @@ public class TaskMapperProvider {
                 "#'{'list[{0}].createDate}," +
                 "#'{'list[{0}].updateDate}," +
                 "#'{'list[{0}].taskType}," +
-                "#'{'list[{0}].description}" +
-                "#'{'list[{0}].pTaskID}" +
-                "#'{'list[{0}].projectID}" +
+                "#'{'list[{0}].description}," +
+                "#'{'list[{0}].pTaskId}," +
+                "#'{'list[{0}].projectId}," +
                 "#'{'list[{0}].tno}" +
                 ")");
         for (int i=0;i<taskList.size();i++){

@@ -41,11 +41,11 @@ public class TaskServiceImpl implements ITaskService {
             taskList.add(new Tree<Task>(task));
         }
         for (Tree pNode : taskList) {
-            if (((Task) pNode.getT()).getPtaskId() == null || ((Task) pNode.getT()).getPtaskId().equals("")) {
+            if (((Task) pNode.getT()).getPTaskId() == null || ((Task) pNode.getT()).getPTaskId().equals("")) {
                 rootTaskList.add(pNode);
             }
             for (Tree node : taskList) {
-                if (((Task) node.getT()).getPtaskId() != null && ((Task) node.getT()).getPtaskId().equals(((Task) pNode.getT()).getTaskId())) {
+                if (((Task) node.getT()).getPTaskId() != null && ((Task) node.getT()).getPTaskId().equals(((Task) pNode.getT()).getTaskId())) {
                     pNode.addChild(node);
                     node.setParentT(pNode.getT());
                 }
@@ -76,10 +76,22 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     @Override
-    public int increateStepTask(Task typeTask) {
-        return 0;
+    public void increateStepTask(Task typeTask) {
+        taskDao.addTask(typeTask);
     }
 
+    @Override
+    public boolean isHasChild(String taskId) {
+        int num = taskDao.countChildById(taskId);
+        if(num == 0){
+            return  false;
+        }
+        return true;
+    }
 
-//    public List<>
+    @Override
+    public int numChild(String taskId) {
+        int num = taskDao.countChildById(taskId);
+        return num;
+    }
 }

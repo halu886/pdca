@@ -1,22 +1,24 @@
 package com.jxufe.halu.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.jxufe.halu.annotation.UpdateDateAnnotation;
 import com.jxufe.halu.model.Project;
 import com.jxufe.halu.model.Task;
 import com.jxufe.halu.service.ITaskService;
 import com.jxufe.halu.service.TaskServiceImpl;
+import com.jxufe.halu.util.DateUtil;
 import com.jxufe.halu.util.Tree;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Controller
 @RequestMapping("/task")
@@ -78,34 +80,48 @@ public class TaskController {
         }
     }
 
-    @RequestMapping("/add/:type")
+//    @UpdateDateAnnotation(isUpdateDate = true)
+    @RequestMapping(value = "/add/{type}",method = RequestMethod.POST)
     public @ResponseBody
-    Map addTask(@RequestBody Map body, @Param("type") String type,HttpSession session) {
+    Map addTask(@RequestBody Map body, HttpSession session, @PathVariable("type") String type ) {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("status", false);
         result.put("message", "添加失败");
         try {
-            Project  project = (Project)session.getAttribute("project");
+            String pTaskId = (String) body.get("pTaskId");
             String childNameKey = "taskName";
-            String childDescription = "description";
-            String childPTaskId = "pTaskId";
+            String childDescriptionKey = "description";
+            String childPTaskIdKey = "pTaskId";
             Task typeTask = new Task();
             int increateRs = 0;
-            switch (type) {
+            switch (type.toLowerCase()) {
                 case "t":
+                    if(service.isHasChild(pTaskId)){
+                        break;
+                    }
                     String nameKey = "TypeTaskName";
                     String descriptionKey = "TypeTaskDescription";
                     String[] typeList = {"p", "d", "c", "a"};
-                    String pTaskId = (String) body.get("pTaskId");
                     List<Task> taskList =new ArrayList<Task>();
                     for (int i = 0; i < 4; i++) {
                         Task task = new Task();
-                        String name = typeList[i]+nameKey;
-                        String description =  typeList[i]+descriptionKey;
+                        String taskOfType = typeList[i];
+                        String name = taskOfType+nameKey;
+                        String description =  taskOfType+descriptionKey;
+                        String startDateKey = taskOfType+"TypeStartDate";
+                        long  startDateLong =  DateUtil.date2TimeStampLong((String) body.get(startDateKey),"yyyy-MM-dd HH:mm:ss");
+                        Timestamp startTime = new Timestamp(startDateLong);
+                        String endDateKey = taskOfType +"TypeEndDate";
+                        long endDateLong = DateUtil.date2TimeStampLong((String) body.get(endDateKey),"yyyy-MM-dd HH:mm:ss");
+                        Timestamp endTime = new Timestamp(endDateLong);
                         task.setTaskName((String) body.get(name));
                         task.setDescription((String)body.get(description));
                         task.setTaskType(typeList[i]);
-                        task.setProjectId(pTaskId);
+                        task.setPTaskId(pTaskId);
+                        task.setStartDate(startTime);
+                        task.setEndDate(endTime);
+                        task.setCreateDate(new Timestamp(System.currentTimeMillis()));
+                        task.setProjectId((String) session.getAttribute("projectID"));
                         taskList.add(task);
                     }
                     increateRs =  service.increateTypeTask(taskList);
@@ -114,50 +130,29 @@ public class TaskController {
                     }
                     break;
                 case "p":
-                    typeTask.setTaskType("t");
-                    typeTask.setDescription((body.get(childDescription) == null)?"":(String) body.get(childNameKey));
-                    typeTask.setTaskName((String) body.get(childNameKey));
-                    typeTask.setProjectId(project.getProjectID());
-                    typeTask.setPtaskId((String)body.get(childPTaskId));
-                    increateRs= service.increateStepTask(typeTask);
-                    if(increateRs != 1){
-                        throw new Exception("增加异常");
-                    }
-                    break;
                 case "d":
-                    typeTask.setTaskType("t");
-                    typeTask.setDescription((body.get(childDescription) == null)?"":(String) body.get(childNameKey));
-                    typeTask.setTaskName((String) body.get(childNameKey));
-                    typeTask.setProjectId(project.getProjectID());
-                    typeTask.setPtaskId((String)body.get(childPTaskId));
-                    increateRs= service.increateStepTask(typeTask);
-                    if(increateRs != 1){
-                        throw new Exception("增加异常");
-                    }
-                    break;
                 case "c":
-                    typeTask.setTaskType("t");
-                    typeTask.setDescription((body.get(childDescription) == null)?"":(String) body.get(childNameKey));
-                    typeTask.setTaskName((String) body.get(childNameKey));
-                    typeTask.setProjectId(project.getProjectID());
-                    typeTask.setPtaskId((String)body.get(childPTaskId));
-                    increateRs= service.increateStepTask(typeTask);
-                    if(increateRs != 1){
-                        throw new Exception("增加异常");
-                    }
-                    break;
                 case "a":
-                    typeTask.setTaskType("t");
-                    typeTask.setDescription((body.get(childDescription) == null)?"":(String) body.get(childNameKey));
+                    long  startDateLong =  DateUtil.date2TimeStampLong((String) body.get("startDate"),"yyyy-MM-dd HH:mm:ss");
+                    Timestamp startTime = new Timestamp(startDateLong);
+                    long endDateLong = DateUtil.date2TimeStampLong((String) body.get("endDate"),"yyyy-MM-dd HH:mm:ss");
+                    Timestamp endTime = new Timestamp(endDateLong);
+                    typeTask.setTaskType("T");
+                    typeTask.setDescription((body.get(childDescriptionKey) == null)?"":(String) body.get(childNameKey));
                     typeTask.setTaskName((String) body.get(childNameKey));
-                    typeTask.setProjectId(project.getProjectID());
-                    typeTask.setPtaskId((String)body.get(childPTaskId));
-                    increateRs= service.increateStepTask(typeTask);
-                    if(increateRs != 1){
-                        throw new Exception("增加异常");
-                    }
+                    typeTask.setProjectId((String) session.getAttribute("projectID"));
+                    typeTask.setPTaskId(pTaskId);
+                    typeTask.setStartDate(startTime);
+                    typeTask.setEndDate(endTime);
+                    typeTask.setCreateDate(new Timestamp(System.currentTimeMillis()));
+                    typeTask.setTno(service.numChild(pTaskId)+1);
+                    typeTask.setProjectId((String) session.getAttribute("projectID"));
+                    service.increateStepTask(typeTask);
                     break;
+                    default: throw new Exception("任务类型异常");
             }
+            result.put("status",true);
+            result.put("message","添加成功");
         } catch (Exception e) {
             e.printStackTrace();
             result.put("message", "添加异常");

@@ -12,8 +12,8 @@ public interface TaskMapper {
     @Select("select * from task where TaskID = #{id}")
     Task findTaskById(String id);
 
-    @Insert("Insert into task(taskId,taskName,createDate,updateDate,taskType,Description,pTaskId,projectId)" +
-            " values(#{taskId},#{taskId},#{taskName},#{createDate},#{updateDate},#{taskType},#{Description},#{pTaskId},#{projectId })")
+    @Insert("Insert into task(taskId,taskName,createDate,updateDate,taskType,Description,pTaskId,projectId,tno)" +
+            " values(#{taskId},#{taskName},#{createDate},#{updateDate},#{taskType},#{description},#{pTaskId},#{projectId },#{tno})")
     void addTask(Task task);
 
     @Select("select * from task")
@@ -25,6 +25,14 @@ public interface TaskMapper {
     @Update("UPDATE task SET TaskName =#{taskName},TaskType=#{taskType},Description=#{description},Tno=#{tno} WHERE TaskID=#{taskId}")
     int update(Task task);
 
-    @InsertProvider(type = TaskMapperProvider.class,method = "insertBatch")
+    @InsertProvider(type = TaskMapperProvider.class, method = "insertBatch")
     int insertBatch(List<Task> taskList);
+
+    @Select("SELECT\n" +
+            "\tcount(*)\n" +
+            "FROM\n" +
+            "\ttask\n" +
+            "WHERE\n" +
+            "task.PTaskID = #{id}")
+    int countChildById(String id);
 }

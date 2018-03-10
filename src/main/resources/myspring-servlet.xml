@@ -29,6 +29,9 @@
         </property>
     </bean>
 
+    <mvc:interceptors>
+        <bean class="com.jxufe.halu.interceptor.DateHandleInterceptor"/>
+    </mvc:interceptors>
 
     <!--ViewResolver 视图解析器-->
     <!--用于支持Servlet、JSP视图解析-->

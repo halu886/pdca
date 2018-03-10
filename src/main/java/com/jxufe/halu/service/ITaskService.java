@@ -14,5 +14,9 @@ public interface ITaskService {
     public List<Tree<Task>> getTaskTreeByProjectId(String projectId);
     public int updateTask(Task task);
     public int increateTypeTask(List<Task> taskList) throws Exception;
-    public int increateStepTask(Task typeTask);
+    public void increateStepTask(Task typeTask);
+    public boolean isHasChild(String taskId);
+    int numChild(String pTaskId);
+//    public boolean
+
 }
