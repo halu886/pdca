@@ -8,6 +8,7 @@ import com.jxufe.halu.service.ITaskService;
 import com.jxufe.halu.service.TaskServiceImpl;
 import com.jxufe.halu.util.DateUtil;
 import com.jxufe.halu.util.Tree;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.tree.ExpandVetoException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.*;
@@ -26,6 +28,7 @@ import java.util.*;
 public class TaskController {
 
     private ITaskService service = new TaskServiceImpl();
+
 
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public ModelAndView toIndex(
@@ -62,25 +65,38 @@ public class TaskController {
         }
     }
 
-    @RequestMapping("/update")
+    @RequestMapping(value = "/update" ,method = RequestMethod.POST)
+    @UpdateDateAnnotation
     public @ResponseBody
-    Map update(Task task) {
+    Map update(@RequestBody Task task) {
         Map<String, Object> rs = new HashMap<String, Object>();
         rs.put("status", false);
-//        rs.put("data",null);
         rs.put("message", "更新失败");
         try {
-            service.updateTask(task);
+            Task databaseTask = service.findTaskById(task.getTaskId());
+            if(!(databaseTask instanceof  Task)) throw  new Exception("更新异常");
+            Task updateTask = new Task(task.getTaskId(),
+                    task.getTaskName(),
+                    databaseTask.getCreateDate(),
+                    task.getUpdateDate(),
+                    databaseTask.getTaskType(),
+                    task.getDescription(),
+                    databaseTask.getPTaskId(),
+                    databaseTask.getProjectId(),
+                    databaseTask.getTno()
+                    );
+            int updateNum = service.updateTask(updateTask);
+            if(updateNum!= 1) throw new Exception("添加异常");
             rs.put("status", true);
             rs.put("message", "更新成功");
         } catch (Exception e) {
             e.printStackTrace();
+            rs.put("message","更新异常");
         } finally {
             return rs;
         }
     }
 
-//    @UpdateDateAnnotation(isUpdateDate = true)
     @RequestMapping(value = "/add/{type}",method = RequestMethod.POST)
     public @ResponseBody
     Map addTask(@RequestBody Map body, HttpSession session, @PathVariable("type") String type ) {

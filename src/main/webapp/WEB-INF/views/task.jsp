@@ -36,13 +36,13 @@
                         <div class="form-group">
                             <label for="TaskID" class="col-sm-2  control-lable">taskId</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="TaskID" name="taskId" readonly>
+                                <input type="text" class="form-control modify-unable" id="TaskID" name="taskId" readonly>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="TaskName" class=" col-sm-2 control-lable">taskName</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="TaskName" name="taskName" readonly>
+                                <input type="text" class="form-control modify-unable" id="TaskName" name="taskName" readonly>
                             </div>
                         </div>
                         <div class="form-group">
@@ -53,15 +53,12 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10 modify">
-                                <button type="button" class="update btn btn-default" onclick="updateTask()" disabled>
+                                <button type="button" class="update btn btn-default" onclick="changeFormStatus('update')" disabled>
                                     修改
                                 </button>
-                                <button type="button" class="submit btn btn-default" onclick="submitTask()" disabled>
+                                <button type="button" class="submit btn btn-default" onclick="submitTask(this)" disabled>
                                     保存
                                 </button>
-                            </div>
-                            <div class="col-sm-offset-2 col-sm-10 insert my-none-display">
-                                <button type="button" class="update btn btn-default" onclick="add()">添加</button>
                             </div>
                         </div>
                     </form>

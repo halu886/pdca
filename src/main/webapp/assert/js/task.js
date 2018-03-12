@@ -27,14 +27,23 @@ $(function () {
     init()
 });
 
+//更新任务表单格式
+function changeFormStatus(status) {
+    switch (status) {
+        case 'update':
+            $('form.task input').attr('readonly', true)
+            $('form.task input:not(.modify-unable)').attr('readonly', false);
+            $('form.task button.update').attr('disabled', true);
+            $('form.task button.submit').attr('disabled', false);
+    }
+    return true;
+}
+
 function renderTask(task) {
     $('input[name=taskName]').val(task.name);
     $('input[name=description]').val(task.description);
     $('input[name=taskId]').val(task.id);
-    $('input[name=taskName]').removeAttr('readonly');
-    $('input[name=description]').removeAttr('readonly');
-    $('.task-add-t button.update').attr('disabled', false);
-    $('.task-add-t button.clear').attr('disabled', false)
+    $('.task button.update').attr('disabled', false);
 }
 
 function updateTask() {
@@ -47,10 +56,10 @@ function updateTask() {
             datatype: 'text',
             contentType: "application/x-www-form-urlencoded",
             success: function (data) {
-                if (data.status != 'true') {
+                if (data.status != true) {
                     console.error(data.message);
                 } else {
-                    window.location.href = "task/index";
+                    window.location.href = "index";
                 }
             }
         }
@@ -107,7 +116,7 @@ function validTypeTask(task) {
 
 function validTask(task) {
     var selectItem = $.extend(true, {}, _this.item);
-    if (Date.parse(task.startDate) > Date.parse(task.endDate) || selectItem.t.startDate > Date.parse(task.startDate) ||  selectItem.t.endDate < Date.parse(task.endDate)) {
+    if (Date.parse(task.startDate) > Date.parse(task.endDate) || selectItem.t.startDate > Date.parse(task.startDate) || selectItem.t.endDate < Date.parse(task.endDate)) {
         return false;
     }
     return true;
@@ -168,5 +177,23 @@ function addTask(button) {
     }
 }
 
-function submitTask() {
+//任务提交
+function submitTask(button) {
+    var form = $(button).parents('form');
+    var object = form.serializeObject();
+    $.ajax({
+        type: "POST",
+        url: 'update',
+        data: JSON.stringify(object),
+        dataType: 'json',
+        contentType: "application/json",
+        success:function (data) {
+            if(data.status === true){
+                changeFormStatus('updateEnd');
+            }else {
+                console.error(data.message);
+                alert('提交失败');
+            }
+        }
+    })
 }

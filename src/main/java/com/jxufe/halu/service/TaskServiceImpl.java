@@ -55,15 +55,7 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     public int updateTask(Task task) {
-        Task taskFromData = taskDao.findTaskById(task.getTaskId());
-//        taskFromData.setCreateDate(tak);
-        taskFromData.setDescription(task.getDescription() instanceof String?task.getDescription():taskFromData.getDescription());
-        taskFromData.setTaskName(task.getTaskName() instanceof String?task.getTaskName():taskFromData.getTaskName());
-        if(taskFromData.getTaskType().equals("T")){
-            taskFromData.setTno(task.getTno()!=null?task.getTno():taskFromData.getTno());
-        }
-        taskFromData.setTaskType(task.getTaskType() instanceof String?task.getTaskType():taskFromData.getTaskType());
-        return taskDao.update(taskFromData);
+        return taskDao.update(task);
     }
 
 

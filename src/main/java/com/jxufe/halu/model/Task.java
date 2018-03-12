@@ -40,7 +40,8 @@ public class Task implements IBaseBean {
         this.taskId = taskId;
     }
 
-    public Task(String taskId, String taskName, Timestamp createDate, Timestamp updateDate, String taskType, String description, String ptaskId, String projectId, Integer tno) {
+    public Task(String taskId, String taskName, Timestamp createDate, Timestamp updateDate,
+                String taskType, String description, String ptaskId, String projectId, Integer tno) {
         super();
         this.taskId = taskId;
         this.taskName = taskName;
