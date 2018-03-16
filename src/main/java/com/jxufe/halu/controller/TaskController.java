@@ -52,8 +52,10 @@ public class TaskController {
             projectId = (String) session.getAttribute("projectID");
             List<Tree<Task>> taskTree = service.getTaskTreeByProjectId(projectId);
             JSONArray taskJsonArray = new JSONArray();
+            String[] methods = {"getTags"};
+            String[] keys = {"tags"};
             for (Tree task : taskTree) {
-                taskJsonArray.add(task.toJson());
+                taskJsonArray.add(task.toJson(methods,keys));
             }
             rs.put("status", true);
             rs.put("data", taskJsonArray);

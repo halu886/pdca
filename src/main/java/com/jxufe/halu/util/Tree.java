@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jxufe.halu.model.IBaseBean;
 import com.jxufe.halu.model.Project;
+
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,12 +57,22 @@ public class Tree < T extends IBaseBean>{
         return  false;
     }
 
-    public JSONObject toJson(){
+    public JSONObject toJson(String[] methods,String[] keys) throws Exception {
+        if(methods.length != keys.length) throw  new Exception("参数异常!长度需保持一致");
         JSONObject object = new JSONObject();
-        object.put("text",this.getT().getName());
+        T t = this.getT();
+        object.put("text",t.getName());
+        List<String> tagList  = new ArrayList<String>();
+        Class clazz = t.getClass();
+        int indexKey = 0;
+        for (String methodName:methods){
+            Method  method = clazz.getDeclaredMethod(methodName);
+            Object rtValue = method.invoke(t);
+            object.put(keys[indexKey++],rtValue);
+        }
         JSONArray jsonArray = new JSONArray();
         for(Tree tree:this.getChildNodes()){
-            jsonArray.add(tree.toJson());
+            jsonArray.add(tree.toJson(methods,keys));
         }
         object.put("nodes",jsonArray);
         object.put("t",this.getT());

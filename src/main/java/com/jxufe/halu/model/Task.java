@@ -11,6 +11,7 @@ public class Task implements IBaseBean {
     private String description;
     private String pTaskId;
     private String projectId;
+    private String progress;
     private Integer tno;
     private Timestamp startDate;
     private Timestamp endDate;
@@ -133,5 +134,17 @@ public class Task implements IBaseBean {
 
     public String getId() {
         return this.taskId;
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress;
+    }
+
+    public  String[] getTags(){
+        return new String[]{this.getProgress()};
     }
 }

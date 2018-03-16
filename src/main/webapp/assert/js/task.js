@@ -9,7 +9,7 @@ $(function () {
             if (data.status == true) {
                 $('#taskTree').treeview({
                     data: data.data,
-                    tags: ['aasd'],
+                    showTags: true,
                     onNodeSelected: function (e, node) {
                         renderTask(node.t);
                     }
@@ -21,7 +21,6 @@ $(function () {
                 console.error(data.message)
             }
         });
-
     }
 
     init()
@@ -197,3 +196,4 @@ function submitTask(button) {
         }
     })
 }
+
