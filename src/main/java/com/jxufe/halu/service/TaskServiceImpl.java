@@ -6,10 +6,13 @@ import com.jxufe.halu.Dao.ProjectDaoImpl;
 import com.jxufe.halu.Dao.TaskDaoImpl;
 import com.jxufe.halu.model.Task;
 import com.jxufe.halu.service.ITaskService;
+import com.jxufe.halu.util.DateUtil;
 import com.jxufe.halu.util.Tree;
 
 import javax.print.DocFlavor;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +58,7 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     public int updateTask(Task task) {
+        task.setUpdateDate(DateUtil.getCurrentTimestamp());
         return taskDao.update(task);
     }
 

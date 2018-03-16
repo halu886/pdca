@@ -66,7 +66,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/update" ,method = RequestMethod.POST)
-    @UpdateDateAnnotation
+//    @UpdateDateAnnotation
     public @ResponseBody
     Map update(@RequestBody Task task) {
         Map<String, Object> rs = new HashMap<String, Object>();
