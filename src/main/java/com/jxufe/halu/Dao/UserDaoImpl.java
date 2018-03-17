@@ -7,11 +7,14 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
+import java.util.Set;
 
+@Repository
 public class UserDaoImpl implements IUserDao {
     private SqlSessionFactory sessionFactory;
     private SqlSession session;
@@ -42,6 +45,15 @@ public class UserDaoImpl implements IUserDao {
         return mapper.getAllUsers();
     }
 
+    @Override
+    public Set<String> getRoleById(String id) {
+        return mapper.getRoleById(id);
+    }
+
+    @Override
+    public Set<String> getPermissionById(String id) {
+        return mapper.getPermissionById(id);
+    }
 
 
 }

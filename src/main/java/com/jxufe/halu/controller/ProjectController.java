@@ -26,8 +26,8 @@ public class ProjectController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(HttpSession session) {
-        String userID = (String) session.getAttribute("userID");
-        List<Project> project = projectService.getProjectsOfUser(userID);
+        User user = (User) session.getAttribute("user");
+        List<Project> project = projectService.getProjectsOfUser(user.getUserID());
         return new ModelAndView("project", "projects", project);
     }
 
