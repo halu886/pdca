@@ -33,16 +33,14 @@ public class LoginController {
         User userData = null;
         Subject subject = SecurityUtils.getSubject();
         try {
-            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUserID(), user.getPassword());
+            userData = userService.findUserByName(user.getUsername());
+            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userData.getUserID(), userData.getPassword());
             subject.login(usernamePasswordToken);
         } catch (Exception e) {
             e.printStackTrace();
             return new ModelAndView("redirect:.");
         }
-        userData = userService.findUserById(user.getUserID());
-        map.put("userID", userData.getUserID());
-        map.put("userName", userData.getUsername());
-        subject.getSession().setAttribute("user", user);
+        subject.getSession().setAttribute("user", userData);
         return new ModelAndView("main");
     }
 }

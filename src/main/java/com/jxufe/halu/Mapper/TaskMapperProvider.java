@@ -31,4 +31,13 @@ public class TaskMapperProvider {
         }
         return  sb.toString();
     }
+
+    public String queryByTask(Map map){
+        Task queryTask = (Task) map.get("queryTask");
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM WHERE");
+        String[] paramList = {"taskId","taskName","taskType","description","pTaskId","project","progress","tno"};
+
+        return  null;
+    }
 }

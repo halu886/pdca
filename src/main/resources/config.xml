@@ -19,5 +19,6 @@
         <mapper class="com.jxufe.halu.Mapper.UserMapper"/>
         <mapper class="com.jxufe.halu.Mapper.ProjectMapper"/>
         <mapper class="com.jxufe.halu.Mapper.TaskMapper"/>
+        <mapper class="com.jxufe.halu.Mapper.RoleMapper"/>
     </mappers>
 </configuration>

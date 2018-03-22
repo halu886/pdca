@@ -68,7 +68,6 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/update" ,method = RequestMethod.POST)
-//    @UpdateDateAnnotation
     public @ResponseBody
     Map update(@RequestBody Task task) {
         Map<String, Object> rs = new HashMap<String, Object>();
@@ -177,5 +176,23 @@ public class TaskController {
         } finally {
             return result;
         }
+    }
+
+    @RequestMapping(value="/overTask/{taskId}",method = RequestMethod.GET )
+    public @ResponseBody Map overTask(@PathVariable("taskId") String taskId){
+        Map<String,Object> result = new HashMap<String,Object>();
+        result.put("status",false);
+        result.put("message","结束失败");
+        try{
+            if(service.isValidOver(taskId)){
+                throw new Exception("不能结束");
+            }
+            service.overTask(taskId);
+            result.put("status",true);
+            result.put("message","结束任务");
+        }catch (Exception e){
+            result.put("message","结束异常");
+        }
+        return  result;
     }
 }

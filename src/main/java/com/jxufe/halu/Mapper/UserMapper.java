@@ -14,7 +14,8 @@ public interface UserMapper {
     User findUserById(String id);
 
     @Insert("insert into user(username,password) values(#{username},#{password})")
-    void addUser(User user);
+    @Options(useGeneratedKeys=true,keyProperty="userID", keyColumn="UserID")
+    int addUser(User user);
 
     @Select("select * from user")
     List<User> getAllUsers();
@@ -26,7 +27,7 @@ public interface UserMapper {
             "LEFT JOIN mid_user_role ur ON ur.UserID = us.UserID\n" +
             "LEFT JOIN role rl ON ur.RoleID = rl.RoleID\n" +
             "WHERE\n" +
-            "\tus.UserID = ${Id}")
+            "\tus.UserID = #{Id}")
     Set<String> getRoleById(String id);
 
     @Select("SELECT\n" +
@@ -38,6 +39,13 @@ public interface UserMapper {
             "LEFT JOIN mid_role_permission rp ON rl.RoleID = rp.RoleID\n" +
             "LEFT JOIN permission pms ON rp.PermissionID = pms.PermissionID\n" +
             "WHERE\n" +
-            "\tus.UserID = ${Id}")
+            "\tus.UserID = #{Id}")
     Set<String> getPermissionById(String id);
+
+    @Insert("INSERT INTO mid_user_role (UserID, RoleID)\n" +
+            "VALUES(#{0},#{1})")
+    int addRoleOfUser(String userId, String roleId);
+
+    @Select("select * from user where userName = #{0}")
+    User findUserByName(String username);
 }

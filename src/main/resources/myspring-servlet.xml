@@ -19,7 +19,7 @@
     <mvc:resources mapping="/assert/**" location="/assert/"/>
 
     <!-- 开启注解 -->
-    <mvc:annotation-driven conversion-service="converterUtil"/>
+    <mvc:annotation-driven />
 
     <bean id="converterUtil" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">

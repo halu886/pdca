@@ -65,4 +65,9 @@ public class TaskDaoImpl implements ITaskDao {
     public int countChildById(String id) {
         return mapper.countChildById(id);
     }
+
+    @Override
+    public List<Task> queryByTask(Task queryTask) {
+        return mapper.queryByTask(queryTask);
+    }
 }

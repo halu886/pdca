@@ -1,10 +1,7 @@
 package com.jxufe.halu.Mapper;
 
 import com.jxufe.halu.model.Task;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -35,4 +32,7 @@ public interface TaskMapper {
             "WHERE\n" +
             "task.PTaskID = #{id}")
     int countChildById(String id);
+
+    @SelectProvider(type = TaskMapperProvider.class,method = "queryByTask")
+    List<Task> queryByTask(Task queryTask);
 }

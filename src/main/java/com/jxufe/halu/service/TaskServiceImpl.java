@@ -10,11 +10,9 @@ import com.jxufe.halu.util.DateUtil;
 import com.jxufe.halu.util.Tree;
 
 import javax.print.DocFlavor;
+import java.lang.reflect.Method;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TaskServiceImpl implements ITaskService {
 
@@ -65,7 +63,7 @@ public class TaskServiceImpl implements ITaskService {
 
     @Override
     public int increateTypeTask(List<Task> taskList) throws Exception {
-        if(taskList.size()!=4){
+        if (taskList.size() != 4) {
             throw new Exception("参数异常");
         }
         return taskDao.insertBatch(taskList);
@@ -79,8 +77,8 @@ public class TaskServiceImpl implements ITaskService {
     @Override
     public boolean isHasChild(String taskId) {
         int num = taskDao.countChildById(taskId);
-        if(num == 0){
-            return  false;
+        if (num == 0) {
+            return false;
         }
         return true;
     }
@@ -89,5 +87,78 @@ public class TaskServiceImpl implements ITaskService {
     public int numChild(String taskId) {
         int num = taskDao.countChildById(taskId);
         return num;
+    }
+
+    @Override
+    public boolean isValidOver(String taskId) throws Exception {
+        Task task = this.findTaskById(taskId);
+        List<String> types = Arrays.asList(new String[]{"P", "D", "C", "A"});
+        String type = task.getTaskType();
+        switch (type) {
+            case "t": {
+                Task queryTask = new Task();
+                queryTask.setTaskType("A");
+                queryTask.setPTaskId(task.getTaskId());
+                List<Task> tasks = this.queryByTask(queryTask);
+                Task taskTypeA = tasks.get(0);
+                if (!taskTypeA.getProgress().equals("100")) {
+                    return false;
+                }
+                break;
+            }
+            case "P":
+            case "D":
+            case "C":
+            case "A":
+                {
+                int typeIndex = types.indexOf(type);
+                if (typeIndex != 0) {
+                    String preType = types.get(--typeIndex);
+                    Task queryTask = new Task();
+                    queryTask.setPTaskId(task.getPTaskId());
+                    queryTask.setTaskType(preType);
+                    List<Task> preTask =  this.queryByTask(queryTask);
+                    if(!preTask.get(0).getProgress().equals(100)){
+                        return false;
+                    }
+                }
+                Task queryTask = new Task();
+                queryTask.setPTaskId(task.getTaskId());
+                List<Task> taskChilds = this.queryByTask(queryTask);
+                for(Task taskChild:taskChilds){
+                    if(!taskChild.getProgress().equals("100")){
+                        return false;
+                    }
+                }
+                break;
+            }
+            default: throw  new Exception("数据异常:type类型不存在\t\t"+type);
+        }
+        return true;
+    }
+
+    /**
+     * 完结任务
+     * @param taskId 任务ID
+     */
+    @Override
+    public void overTask(String taskId) throws Exception {
+        Task task = this.findTaskById(taskId);
+        task.setProgress("100");
+        this.updateTask(task);
+        Task taskParent = this.findTaskById(task.getPTaskId());
+        int progressParent  = Integer.valueOf(taskParent.getProgress());
+        if((progressParent+Integer.valueOf(task.getProgress())==100) && this.isValidOver(taskParent.getTaskId())){
+            this.overTask(taskId);
+        }else {
+            taskParent.setProgress(progressParent+Integer.valueOf(task.getProgress())+"");
+            this.updateTask(taskParent);
+        }
+
+    }
+
+    @Override
+    public List<Task> queryByTask(Task queryTask) {
+        return this.taskDao.queryByTask(queryTask);
     }
 }

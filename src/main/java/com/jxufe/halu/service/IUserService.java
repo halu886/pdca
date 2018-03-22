@@ -9,8 +9,14 @@ import java.util.Set;
 
 public interface IUserService {
     public User findUserById(String id);
-    public void addUser(User user);
+    public String addUser(User user);
     public List<User> getAllUsers();
     Set<String> queryRoleByID(String userId);
     Set<String> queryPermissionByID(String userId);
+
+    boolean register(User user,String name  );
+
+    String addRoleOfUser(String userId, String roleId);
+
+    User findUserByName(String username);
 }

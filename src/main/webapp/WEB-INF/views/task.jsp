@@ -59,6 +59,7 @@
                                 <button type="button" class="submit btn btn-default" onclick="submitTask(this)" disabled>
                                     保存
                                 </button>
+                                <button type="button" class="over btn btn-default" onclick="overTask()">结束</button>
                             </div>
                         </div>
                     </form>

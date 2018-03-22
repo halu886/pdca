@@ -45,6 +45,17 @@ function renderTask(task) {
     $('.task button.update').attr('disabled', false);
 }
 
+function overTask() {
+    var itemSelected = $.extend(true, {}, _this.item);
+    $.get('overTask'+_this.t.id,function (data) {
+        if(data.status){
+            window.location.reload();
+        } else{
+            alert(data.message);
+        }
+    })
+}
+
 function updateTask() {
     var formData = $('form.task').serializeArray();
     $.ajax(

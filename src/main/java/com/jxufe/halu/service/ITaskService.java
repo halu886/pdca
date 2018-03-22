@@ -17,6 +17,7 @@ public interface ITaskService {
     public void increateStepTask(Task typeTask);
     public boolean isHasChild(String taskId);
     int numChild(String pTaskId);
-//    public boolean
-
+    boolean isValidOver(String taskId) throws Exception;
+    void overTask(String taskId) throws Exception;
+    List<Task> queryByTask(Task queryTask);
 }
