@@ -95,7 +95,7 @@ public class TaskServiceImpl implements ITaskService {
         List<String> types = Arrays.asList(new String[]{"P", "D", "C", "A"});
         String type = task.getTaskType();
         switch (type) {
-            case "t": {
+            case "T": {
                 Task queryTask = new Task();
                 queryTask.setTaskType("A");
                 queryTask.setPTaskId(task.getTaskId());
@@ -118,7 +118,7 @@ public class TaskServiceImpl implements ITaskService {
                     queryTask.setPTaskId(task.getPTaskId());
                     queryTask.setTaskType(preType);
                     List<Task> preTask =  this.queryByTask(queryTask);
-                    if(!preTask.get(0).getProgress().equals(100)){
+                    if(!preTask.get(0).getProgress().equals("100")){
                         return false;
                     }
                 }
@@ -132,7 +132,7 @@ public class TaskServiceImpl implements ITaskService {
                 }
                 break;
             }
-            default: throw  new Exception("数据异常:type类型不存在\t\t"+type);
+            default: throw  new Exception("数据异常:type类型不存在\t"+type);
         }
         return true;
     }
@@ -146,12 +146,15 @@ public class TaskServiceImpl implements ITaskService {
         Task task = this.findTaskById(taskId);
         task.setProgress("100");
         this.updateTask(task);
+        if(!(task.getPTaskId() instanceof  String )){
+            return;
+        }
         Task taskParent = this.findTaskById(task.getPTaskId());
         int progressParent  = Integer.valueOf(taskParent.getProgress());
-        if((progressParent+Integer.valueOf(task.getProgress())==100) && this.isValidOver(taskParent.getTaskId())){
-            this.overTask(taskId);
+        if((progressParent+Integer.valueOf(task.getNodeProgress())==100) && this.isValidOver(taskParent.getTaskId())){
+            this.overTask(taskParent.getTaskId());
         }else {
-            taskParent.setProgress(progressParent+Integer.valueOf(task.getProgress())+"");
+            taskParent.setProgress(progressParent+Integer.valueOf(task.getNodeProgress())+"");
             this.updateTask(taskParent);
         }
 

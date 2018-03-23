@@ -11,6 +11,7 @@ $(function () {
                     data: data.data,
                     showTags: true,
                     onNodeSelected: function (e, node) {
+                        _this.item = node;
                         renderTask(node.t);
                     }
                 });
@@ -47,7 +48,7 @@ function renderTask(task) {
 
 function overTask() {
     var itemSelected = $.extend(true, {}, _this.item);
-    $.get('overTask'+_this.t.id,function (data) {
+    $.get('overTask/'+itemSelected.t.id,function (data) {
         if(data.status){
             window.location.reload();
         } else{

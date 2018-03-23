@@ -184,13 +184,14 @@ public class TaskController {
         result.put("status",false);
         result.put("message","结束失败");
         try{
-            if(service.isValidOver(taskId)){
+            if(!service.isValidOver(taskId)){
                 throw new Exception("不能结束");
             }
             service.overTask(taskId);
             result.put("status",true);
             result.put("message","结束任务");
         }catch (Exception e){
+            e.printStackTrace();
             result.put("message","结束异常");
         }
         return  result;

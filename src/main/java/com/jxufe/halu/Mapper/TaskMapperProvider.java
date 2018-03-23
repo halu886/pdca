@@ -2,6 +2,7 @@ package com.jxufe.halu.Mapper;
 
 import com.jxufe.halu.model.Task;
 
+import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
@@ -32,12 +33,23 @@ public class TaskMapperProvider {
         return  sb.toString();
     }
 
-    public String queryByTask(Map map){
-        Task queryTask = (Task) map.get("queryTask");
+    public String queryByTask(Task queryTask) throws Exception {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT * FROM WHERE");
-        String[] paramList = {"taskId","taskName","taskType","description","pTaskId","project","progress","tno"};
-
-        return  null;
+        sb.append("SELECT * FROM Task WHERE ");
+        String[] paramList = {"taskId","taskName","taskType","description","pTaskId","projectId","progress","tno"};
+        Class taskCalzz = queryTask.getClass();
+        int countAppend = 0 ;
+        for(String param:paramList){
+            Field paramField=  taskCalzz.getDeclaredField(param);
+            paramField.setAccessible(true);
+            String taskFieldValue = (String)paramField.get(queryTask);
+            if(taskFieldValue instanceof  String &&!taskFieldValue.equals("")){
+                sb.append(param +" = #{"+param+"} and ");
+                ++countAppend;
+            }
+        }
+        if(countAppend==0) throw  new Exception("参数异常");
+        sb.delete(sb.length()-4,sb.length()-1);
+        return  sb.toString();
     }
 }

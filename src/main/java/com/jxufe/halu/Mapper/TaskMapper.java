@@ -19,7 +19,7 @@ public interface TaskMapper {
     @Select("SELECT * FROM task WHERE ProjectID = #{projectId}")
     List<Task> getTaskByProjectId(String projectId);
 
-    @Update("UPDATE task SET TaskName =#{taskName},TaskType=#{taskType},Description=#{description},Tno=#{tno} WHERE TaskID=#{taskId}")
+    @Update("UPDATE task SET TaskName =#{taskName},TaskType=#{taskType},Description=#{description},Tno=#{tno} ,Progress=#{progress},NodeProgress=#{nodeProgress} WHERE TaskID=#{taskId}")
     int update(Task task);
 
     @InsertProvider(type = TaskMapperProvider.class, method = "insertBatch")
