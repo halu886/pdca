@@ -1,6 +1,5 @@
 package com.jxufe.halu.service;
 
-import com.jxufe.halu.model.Project;
 import com.jxufe.halu.model.Task;
 import com.jxufe.halu.util.Tree;
 
@@ -20,4 +19,8 @@ public interface ITaskService {
     boolean isValidOver(String taskId) throws Exception;
     void overTask(String taskId) throws Exception;
     List<Task> queryByTask(Task queryTask);
+
+    List<Map> countTaskByUserID(String userID, String week);
+
+    List<Map> countType(String userID);
 }

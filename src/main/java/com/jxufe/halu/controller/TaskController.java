@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.jxufe.halu.annotation.UpdateDateAnnotation;
 import com.jxufe.halu.model.Project;
 import com.jxufe.halu.model.Task;
+import com.jxufe.halu.model.User;
 import com.jxufe.halu.service.ITaskService;
 import com.jxufe.halu.service.TaskServiceImpl;
 import com.jxufe.halu.util.DateUtil;
 import com.jxufe.halu.util.Tree;
 import org.apache.ibatis.jdbc.Null;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -193,6 +196,44 @@ public class TaskController {
         }catch (Exception e){
             e.printStackTrace();
             result.put("message","结束异常");
+        }
+        return  result;
+    }
+
+    @RequestMapping("/chart/countAddTaskWeek")
+    public  @ResponseBody Map<String,Object> countAddWeek(){
+        Map<String,Object> result = new HashMap<>();
+        result.put("status",false);
+        result.put("message","查询失败");
+        try{
+            Session  session = SecurityUtils.getSubject().getSession();
+            User user = (User) session.getAttribute("user");
+            List<Map> data= service.countTaskByUserID(user.getUserID(),"week");
+            result.put("data",data);
+            result.put("status",true);
+            result.put("message","查询成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            result.put("message","查询异常");
+        }
+        return  result;
+    }
+
+    @RequestMapping("/chart/countType")
+    public @ResponseBody Map<String,Object> countType(){
+        Map<String,Object> result = new HashMap<>();
+        result.put("status",false);
+        result.put("message","查询失败");
+        try {
+            Session session = SecurityUtils.getSubject().getSession();
+            User user = (User)session.getAttribute("user");
+            List<Map> data = service.countType(user.getUserID());
+            result.put("status",true);
+            result.put("message","查询成功");
+            result.put("data",data);
+        }catch (Exception e){
+            e.printStackTrace();
+            result.put("message","查询异常");
         }
         return  result;
     }

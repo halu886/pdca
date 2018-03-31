@@ -1,17 +1,11 @@
 package com.jxufe.halu.service;
 
-import com.jxufe.halu.Dao.IProjectDao;
 import com.jxufe.halu.Dao.ITaskDao;
-import com.jxufe.halu.Dao.ProjectDaoImpl;
 import com.jxufe.halu.Dao.TaskDaoImpl;
 import com.jxufe.halu.model.Task;
-import com.jxufe.halu.service.ITaskService;
 import com.jxufe.halu.util.DateUtil;
 import com.jxufe.halu.util.Tree;
 
-import javax.print.DocFlavor;
-import java.lang.reflect.Method;
-import java.sql.Timestamp;
 import java.util.*;
 
 public class TaskServiceImpl implements ITaskService {
@@ -163,5 +157,15 @@ public class TaskServiceImpl implements ITaskService {
     @Override
     public List<Task> queryByTask(Task queryTask) {
         return this.taskDao.queryByTask(queryTask);
+    }
+
+    @Override
+    public List<Map> countTaskByUserID(String userID, String dataType) {
+        return taskDao.countTaskByUserID(userID,"week");
+    }
+
+    @Override
+    public List<Map> countType(String userID) {
+        return null;
     }
 }

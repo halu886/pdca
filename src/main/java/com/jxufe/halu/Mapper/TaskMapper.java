@@ -4,6 +4,7 @@ import com.jxufe.halu.model.Task;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TaskMapper {
     @Select("select * from task where TaskID = #{id}")
@@ -35,4 +36,24 @@ public interface TaskMapper {
 
     @SelectProvider(type = TaskMapperProvider.class,method = "queryByTask")
     List<Task> queryByTask(Task queryTask);
+
+
+    //按周查询新建任务
+    @Select("SELECT\n" +
+            "\tcount(*) as value,\n" +
+            "\tWEEK as name\n" +
+            "FROM\n" +
+            "\t(\n" +
+            "\t\tSELECT\n" +
+            "\t\t\tDAYNAME(CreateDate) AS WEEK\n" +
+            "\t\tFROM\n" +
+            "\t\t\ttask\n" +
+            "\t\tLEFT JOIN mid_user_project AS mup ON task.ProjectID = mup.ProjectID\n" +
+            "\t\tLEFT JOIN `user` ON `user`.UserID = mup.UserID\n" +
+            "\t\tWHERE\n" +
+            "\t\t\t`user`.UserID = #{userID}\n" +
+            "\t) AS alias_task\n" +
+            "GROUP BY\n" +
+            "\tWEEK")
+    List<Map> countTaskByUserID(String userID);
 }

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Repository
@@ -66,6 +68,36 @@ public class UserDaoImpl implements IUserDao {
     @Override
     public User findUserByName(String username) {
         return mapper.findUserByName(username);
+    }
+
+    @Override
+    public int countOfAllProject(String userID) {
+        return mapper.countOfAllProject(userID);
+    }
+
+    //当前用户已完成任务统计
+    public  int countOfHandlerProject(String userID){
+        return  mapper.countOfHandleProject(userID);
+    }
+
+    @Override
+    public Map countOfProject(String userID) {
+        Map countOfProject = new HashMap();
+        int countOfHandlerProject = this.countOfHandlerProject(userID);
+        int countOfAllProject = this.countOfAllProject(userID) - countOfHandlerProject;
+        countOfProject.put("handler",countOfHandlerProject);
+        countOfProject.put("unHandler",countOfAllProject - countOfHandlerProject);
+        return countOfProject;
+    }
+
+    @Override
+    public Map countOfTask(String userID) {
+        List<Map> datas = mapper.countOfTask(userID);
+        Map countType = new HashMap();
+        for (Map data :datas){
+            countType.put((String)data.get("type"),data.get("count"));
+        }
+        return countType;
     }
 
 

@@ -42,6 +42,7 @@ public class CustomRealm extends AuthorizingRealm {
             throw new AuthenticationException("用户不存在");
         }
         AuthenticationInfo authorizationInfo = new SimpleAuthenticationInfo(user.getUserID(),user.getPassword(),null,getName());
+//        authorizationInfo.
         return  authorizationInfo;
     }
 }

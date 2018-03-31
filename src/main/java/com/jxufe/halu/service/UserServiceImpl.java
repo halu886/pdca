@@ -10,7 +10,9 @@ import com.jxufe.halu.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service("userService")
@@ -58,6 +60,16 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User findUserByName(String username) {
         return userDao.findUserByName(username);
+    }
+
+    @Override
+    public Map countOfIndex(String userID) {
+        Map count = new HashMap();
+        Map countProject =  userDao.countOfProject(userID);
+        Map countTask = userDao.countOfTask(userID);
+        count.put("project",countProject);
+        count.put("task",countTask);
+        return count;
     }
 
     @Override

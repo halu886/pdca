@@ -5,6 +5,7 @@ import com.jxufe.halu.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface IUserService {
@@ -19,4 +20,6 @@ public interface IUserService {
     String addRoleOfUser(String userId, String roleId);
 
     User findUserByName(String username);
+
+    Map countOfIndex(String userID);
 }

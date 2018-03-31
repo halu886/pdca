@@ -2,7 +2,6 @@ package com.jxufe.halu.Dao;
 
 import com.jxufe.halu.Mapper.TaskMapper;
 import com.jxufe.halu.model.Task;
-import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
+import java.util.Map;
 
 public class TaskDaoImpl implements ITaskDao {
 
@@ -69,5 +69,10 @@ public class TaskDaoImpl implements ITaskDao {
     @Override
     public List<Task> queryByTask(Task queryTask) {
         return mapper.queryByTask(queryTask);
+    }
+
+    @Override
+    public List<Map> countTaskByUserID(String userID, String week) {
+        return mapper.countTaskByUserID(userID);
     }
 }

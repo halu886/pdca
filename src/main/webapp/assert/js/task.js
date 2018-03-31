@@ -15,9 +15,6 @@ $(function () {
                         renderTask(node.t);
                     }
                 });
-                var iconAdd = '<span class="glyphicon glyphicon-plus-sign task-add-icon"></span>'
-                $('li.list-group-item.node-taskTree').append(iconAdd);
-                $('li.node-taskTree span.task-add-icon').click(addTaskHandler);
             } else {
                 console.error(data.message)
             }
@@ -86,10 +83,14 @@ function renderAddForm(t) {
     }
 }
 
-addTaskHandler = function (event) {
-    var nodeId = $(this).parent().attr("data-nodeid");
-    var node = $('#taskTree').treeview('getNode', nodeId);
+function addTaskHandler() {
+    var node = $('#taskTree').treeview('getSelected')[0]||undefined;
+    if(node) return;
     _this.item = node;
+    var task =  node.t;
+    if(task.type ==='t'&&task.nodes.length>4){
+        alert()
+    }
     renderAddForm.call(this, node.t);
     event.stopPropagation();
 }

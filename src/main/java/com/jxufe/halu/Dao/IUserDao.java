@@ -5,6 +5,7 @@ import com.jxufe.halu.model.User;
 
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface IUserDao {
@@ -17,4 +18,10 @@ public interface IUserDao {
     String addRoleOfUser(String userId, String roleId);
 
     User findUserByName(String username);
+
+    int countOfAllProject(String userID);
+
+    Map countOfProject(String userID);
+
+    Map countOfTask(String userID);
 }

@@ -1,9 +1,9 @@
 package com.jxufe.halu.Dao;
 
-import com.jxufe.halu.model.Project;
 import com.jxufe.halu.model.Task;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ITaskDao {
     public Task findTaskById(String id);
@@ -14,4 +14,6 @@ public interface ITaskDao {
     public int insertBatch(List<Task> taskList);
     public int countChildById(String id);
     List<Task> queryByTask(Task queryTask);
+
+    List<Map> countTaskByUserID(String userID, String week);
 }

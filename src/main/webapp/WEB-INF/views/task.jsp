@@ -59,7 +59,8 @@
                                 <button type="button" class="submit btn btn-default" onclick="submitTask(this)" disabled>
                                     保存
                                 </button>
-                                <button type="button" class="over btn btn-default" onclick="overTask()">结束</button>
+                                <button type="button" class="over btn btn-default" onclick="overTask()" disabled>结束</button>
+                                <button type="button" class="btn btn-default" onclick="addTaskHandler()" disabled>新增子任务</button>
                             </div>
                         </div>
                     </form>
