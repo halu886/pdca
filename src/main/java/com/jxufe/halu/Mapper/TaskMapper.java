@@ -71,4 +71,29 @@ public interface TaskMapper {
             "GROUP BY\n" +
             "\tTaskType")
     List<Map> countType(String userID);
+
+    @Select("SELECT\n" +
+            "\tSUM(a.NodeProgress) as value,\n" +
+            "\n" +
+            "IF (\n" +
+            "\ta.`handler` = 1,\n" +
+            "\t'handler',\n" +
+            "\t'unHandler'\n" +
+            ") AS type\n" +
+            "FROM\n" +
+            "\t(\n" +
+            "\t\tSELECT\n" +
+            "\n" +
+            "\t\tIF (Progress = 100, 1, 0) AS 'handler',\n" +
+            "\t\tNodeProgress\n" +
+            "\tFROM\n" +
+            "\t\t`user`\n" +
+            "\tINNER JOIN mid_user_project ON `user`.UserID = mid_user_project.UserID\n" +
+            "\tINNER JOIN task ON mid_user_project.ProjectID = task.ProjectID\n" +
+            "\tWHERE\n" +
+            "\t\tUSER .UserID = #{userID}\n" +
+            "\t) AS a\n" +
+            "GROUP BY\n" +
+            "\ta.`handler`")
+    List<Map> countProgressByUserId(String userID);
 }

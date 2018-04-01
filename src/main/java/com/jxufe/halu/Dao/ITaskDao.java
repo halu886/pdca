@@ -18,4 +18,6 @@ public interface ITaskDao {
     List<Map> countTaskByUserID(String userID, String week);
 
     List<Map> countType(String userID);
+
+    Map countProgressByUserId(String userID);
 }

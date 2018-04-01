@@ -172,6 +172,6 @@ public class TaskServiceImpl implements ITaskService {
 
     @Override
     public Map countProgressByUserId(String userID) {
-        return null;
+        return taskDao.countProgressByUserId(userID);
     }
 }

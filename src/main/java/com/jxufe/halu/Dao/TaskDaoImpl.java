@@ -82,4 +82,14 @@ public class TaskDaoImpl implements ITaskDao {
         List<Map> datas = mapper.countType(userID);
         return datas;
     }
+
+    @Override
+    public Map countProgressByUserId(String userID) {
+        List<Map> datas = mapper.countProgressByUserId(userID);
+        Map result = new HashMap();
+        for (Map data : datas) {
+            result.put(data.get("type"), data.get("value"));
+        }
+        return result;
+    }
 }
