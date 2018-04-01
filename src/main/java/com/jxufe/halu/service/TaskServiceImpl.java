@@ -103,36 +103,37 @@ public class TaskServiceImpl implements ITaskService {
             case "P":
             case "D":
             case "C":
-            case "A":
-                {
+            case "A": {
                 int typeIndex = types.indexOf(type);
                 if (typeIndex != 0) {
                     String preType = types.get(--typeIndex);
                     Task queryTask = new Task();
                     queryTask.setPTaskId(task.getPTaskId());
                     queryTask.setTaskType(preType);
-                    List<Task> preTask =  this.queryByTask(queryTask);
-                    if(!preTask.get(0).getProgress().equals("100")){
+                    List<Task> preTask = this.queryByTask(queryTask);
+                    if (!preTask.get(0).getProgress().equals("100")) {
                         return false;
                     }
                 }
                 Task queryTask = new Task();
                 queryTask.setPTaskId(task.getTaskId());
                 List<Task> taskChilds = this.queryByTask(queryTask);
-                for(Task taskChild:taskChilds){
-                    if(!taskChild.getProgress().equals("100")){
+                for (Task taskChild : taskChilds) {
+                    if (!taskChild.getProgress().equals("100")) {
                         return false;
                     }
                 }
                 break;
             }
-            default: throw  new Exception("数据异常:type类型不存在\t"+type);
+            default:
+                throw new Exception("数据异常:type类型不存在\t" + type);
         }
         return true;
     }
 
     /**
      * 完结任务
+     *
      * @param taskId 任务ID
      */
     @Override
@@ -140,15 +141,15 @@ public class TaskServiceImpl implements ITaskService {
         Task task = this.findTaskById(taskId);
         task.setProgress("100");
         this.updateTask(task);
-        if(!(task.getPTaskId() instanceof  String )){
+        if (!(task.getPTaskId() instanceof String)) {
             return;
         }
         Task taskParent = this.findTaskById(task.getPTaskId());
-        int progressParent  = Integer.valueOf(taskParent.getProgress());
-        if((progressParent+Integer.valueOf(task.getNodeProgress())==100) && this.isValidOver(taskParent.getTaskId())){
+        int progressParent = Integer.valueOf(taskParent.getProgress());
+        if ((progressParent + Integer.valueOf(task.getNodeProgress()) == 100) && this.isValidOver(taskParent.getTaskId())) {
             this.overTask(taskParent.getTaskId());
-        }else {
-            taskParent.setProgress(progressParent+Integer.valueOf(task.getNodeProgress())+"");
+        } else {
+            taskParent.setProgress(progressParent + Integer.valueOf(task.getNodeProgress()) + "");
             this.updateTask(taskParent);
         }
 
@@ -161,11 +162,16 @@ public class TaskServiceImpl implements ITaskService {
 
     @Override
     public List<Map> countTaskByUserID(String userID, String dataType) {
-        return taskDao.countTaskByUserID(userID,"week");
+        return taskDao.countTaskByUserID(userID, "week");
     }
 
     @Override
     public List<Map> countType(String userID) {
+        return taskDao.countType(userID);
+    }
+
+    @Override
+    public Map countProgressByUserId(String userID) {
         return null;
     }
 }

@@ -237,4 +237,26 @@ public class TaskController {
         }
         return  result;
     }
+
+    /**
+     * 扇形图
+     * @return
+     */
+    @RequestMapping("/chart/taskflow")
+    public @ResponseBody Map<String,Object> taskflow(){
+        Map result = new HashMap();
+        result.put("status",false);
+        result.put("message","查询失败");
+        try{
+            User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+            Map data= service.countProgressByUserId(user.getUserID());
+            result.put("data",data);
+            result.put("status",true);
+            result.put("message","查询成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            result.put("message","查询异常");
+        }
+        return result;
+    }
 }

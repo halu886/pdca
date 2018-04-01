@@ -16,4 +16,6 @@ public interface ITaskDao {
     List<Task> queryByTask(Task queryTask);
 
     List<Map> countTaskByUserID(String userID, String week);
+
+    List<Map> countType(String userID);
 }

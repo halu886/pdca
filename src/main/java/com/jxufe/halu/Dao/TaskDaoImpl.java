@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,5 +75,11 @@ public class TaskDaoImpl implements ITaskDao {
     @Override
     public List<Map> countTaskByUserID(String userID, String week) {
         return mapper.countTaskByUserID(userID);
+    }
+
+    @Override
+    public List<Map> countType(String userID) {
+        List<Map> datas = mapper.countType(userID);
+        return datas;
     }
 }

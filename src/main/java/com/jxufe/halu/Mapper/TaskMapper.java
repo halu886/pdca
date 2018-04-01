@@ -56,4 +56,19 @@ public interface TaskMapper {
             "GROUP BY\n" +
             "\tWEEK")
     List<Map> countTaskByUserID(String userID);
+
+    @Select("SELECT\n" +
+            "\tTaskType AS name,\n" +
+            "\tcount(*) AS\n" +
+            "value\n" +
+            "\n" +
+            "FROM\n" +
+            "\t`user`\n" +
+            "INNER JOIN mid_user_project ON `user`.UserID = mid_user_project.UserID\n" +
+            "INNER JOIN task ON mid_user_project.ProjectID = task.ProjectID\n" +
+            "WHERE\n" +
+            "\tUSER .UserID =#{userID}\n" +
+            "GROUP BY\n" +
+            "\tTaskType")
+    List<Map> countType(String userID);
 }
