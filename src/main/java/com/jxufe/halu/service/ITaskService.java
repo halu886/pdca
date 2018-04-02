@@ -25,4 +25,6 @@ public interface ITaskService {
     List<Map> countType(String userID);
 
     Map countProgressByUserId(String userID);
+
+    Map updateWeekday(String userID);
 }

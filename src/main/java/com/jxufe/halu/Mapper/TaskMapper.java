@@ -96,4 +96,25 @@ public interface TaskMapper {
             "GROUP BY\n" +
             "\ta.`handler`")
     List<Map> countProgressByUserId(String userID);
+
+    @Select("SELECT\n" +
+            "\tweekcount.type,\n" +
+            "\tweekcount.weekday,\n" +
+            "\tCOUNT(*) AS value\n" +
+            "FROM\n" +
+            "\t(\n" +
+            "\t\tSELECT\n" +
+            "\t\t\tTaskType AS type,\n" +
+            "\t\t\tDAYNAME(UpdateDate) AS weekday\n" +
+            "\t\tFROM\n" +
+            "\t\t\t`user`\n" +
+            "\t\tINNER JOIN mid_user_project ON `user`.UserID = mid_user_project.UserID\n" +
+            "\t\tINNER JOIN task ON mid_user_project.ProjectID = task.ProjectID\n" +
+            "\t\tWHERE\n" +
+            "\t\t\t`user`.UserID = #{userID}\n" +
+            "\t) AS weekcount\n" +
+            "GROUP BY\n" +
+            "\tweekcount.type,\n" +
+            "\tweekcount.weekday")
+    List<Map> updateWeekday(String userID);
 }

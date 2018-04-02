@@ -259,4 +259,28 @@ public class TaskController {
         }
         return result;
     }
+
+    /**
+     * vue模板流量统计报表接口
+     * @return
+     */
+    @RequestMapping("/chart/serviceRequest")
+    public @ResponseBody Map<String,Object> serviceRequest(){
+        Map result = new HashMap();
+        result.put("status",false);
+        result.put("message","查询失败");
+        try{
+            User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+            Map data = service.updateWeekday(user.getUserID());
+            result.put("status",true);
+            result.put("message","查询成功");
+            result.put("data",data);
+        }catch (Exception e) {
+            e.printStackTrace();
+            result.put("message","查询异常");
+        }
+        return result;
+    }
+
+
 }

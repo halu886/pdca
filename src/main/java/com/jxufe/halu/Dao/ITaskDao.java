@@ -20,4 +20,6 @@ public interface ITaskDao {
     List<Map> countType(String userID);
 
     Map countProgressByUserId(String userID);
+
+    Map updateWeekday(String userID);
 }

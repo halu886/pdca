@@ -174,4 +174,14 @@ public class TaskServiceImpl implements ITaskService {
     public Map countProgressByUserId(String userID) {
         return taskDao.countProgressByUserId(userID);
     }
+
+    /**
+     * service层获取报表周天更新统计
+     * @param userID
+     * @return
+     */
+    @Override
+    public Map updateWeekday(String userID) {
+        return taskDao.updateWeekday(userID);
+    }
 }
