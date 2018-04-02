@@ -9,9 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TaskDaoImpl implements ITaskDao {
 
@@ -91,5 +89,26 @@ public class TaskDaoImpl implements ITaskDao {
             result.put(data.get("type"), data.get("value"));
         }
         return result;
+    }
+
+    @Override
+    public Map updateWeekday(String userID) {
+        List<Map> data = mapper.updateWeekday(userID);
+        List<String> weekTypes = Arrays.asList(new String[]{"morning","tuesday","wednesday","thursday","friday","saturday","sunday"});
+        List<String> taskTypes = Arrays.asList(new String[]{"T","P","D","C","A"});
+        Map resultData = new HashMap();
+        for (String taskType:taskTypes){
+            List<Integer> weekData = Arrays.asList(new Integer[]{0,0,0,0,0,0,0});
+            resultData.put(taskType,weekData);
+        }
+        Iterator dataIterator = data.iterator();
+        while (dataIterator.hasNext()){
+            Map item = (Map) dataIterator.next();
+            String itemType = (String) item.get("type");
+            String weekType = (String) item.get("weekday");
+            List weekList = (List)resultData.get(itemType);
+            weekList.set( weekTypes.indexOf(weekType.toLowerCase()),((Long)item.get("value")).intValue());
+        }
+        return resultData;
     }
 }
