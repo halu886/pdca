@@ -61,7 +61,7 @@ public class Tree < T extends IBaseBean>{
         if(methods.length != keys.length) throw  new Exception("参数异常!长度需保持一致");
         JSONObject object = new JSONObject();
         T t = this.getT();
-        object.put("text",t.getName());
+        object.put("title",t.getName());
         List<String> tagList  = new ArrayList<String>();
         Class clazz = t.getClass();
         int indexKey = 0;
@@ -74,7 +74,7 @@ public class Tree < T extends IBaseBean>{
         for(Tree tree:this.getChildNodes()){
             jsonArray.add(tree.toJson(methods,keys));
         }
-        object.put("nodes",jsonArray);
+        object.put("children",jsonArray);
         object.put("t",this.getT());
         return  object;
     }
