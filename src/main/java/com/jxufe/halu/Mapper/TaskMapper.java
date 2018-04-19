@@ -117,4 +117,7 @@ public interface TaskMapper {
             "\tweekcount.type,\n" +
             "\tweekcount.weekday")
     List<Map> updateWeekday(String userID);
+
+    @Delete("DELETE task FROM task WHERE task.ProjectID = #{id}")
+    void deleteByProjectId(String id);
 }

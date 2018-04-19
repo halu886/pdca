@@ -27,4 +27,8 @@ public interface ITaskService {
     Map countProgressByUserId(String userID);
 
     Map updateWeekday(String userID);
+
+    void deleteByProjectId(String id);
+
+//    boolean canAdd(String taskId);
 }

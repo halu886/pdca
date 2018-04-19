@@ -22,4 +22,6 @@ public interface ITaskDao {
     Map countProgressByUserId(String userID);
 
     Map updateWeekday(String userID);
+
+    void deleteByProjectId(String id);
 }

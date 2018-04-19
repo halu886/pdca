@@ -6,10 +6,12 @@ import com.jxufe.halu.model.Project;
 import com.jxufe.halu.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 public class ProjectServiceImpl implements  IProjectService {
 
     private IProjectDao projectDao;
+    private  ITaskService taskService = new TaskServiceImpl();
 
     public ProjectServiceImpl() {
         projectDao = new ProjectDaoImpl();
@@ -33,5 +35,24 @@ public class ProjectServiceImpl implements  IProjectService {
     }
     public List<Project> getProjectsOfUser(String id){
         return projectDao.getProjectOfUser(id);
+    }
+
+    @Override
+    public List<Map> queryTable(int page, int size, String searchParam,String userID) {
+        return projectDao.queryTable(page,size,searchParam,userID);
+    }
+
+    @Override
+    public int countProject(String searchParam, String userID) {
+        return projectDao.countProject(searchParam,userID);
+    }
+
+    @Override
+    public int deleteById(String id) {
+        int  num=projectDao.deleteById(id);
+        if(num!=0){
+            taskService.deleteByProjectId(id);
+        }
+        return num;
     }
 }

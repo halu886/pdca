@@ -177,6 +177,7 @@ public class TaskServiceImpl implements ITaskService {
 
     /**
      * service层获取报表周天更新统计
+     *
      * @param userID
      * @return
      */
@@ -184,4 +185,21 @@ public class TaskServiceImpl implements ITaskService {
     public Map updateWeekday(String userID) {
         return taskDao.updateWeekday(userID);
     }
+
+    @Override
+    public void deleteByProjectId(String id) {
+        taskDao.deleteByProjectId(id);
+    }
+
+//    /**
+//     * 验证任务是否有添加功能
+//     *
+//     * @param taskId
+//     * @return
+//     */
+//    @Override
+//    public boolean canAdd(String taskId) {
+//        taskDao.countChildById(taskId);
+//        return false;
+//    }
 }

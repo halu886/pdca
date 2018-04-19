@@ -111,4 +111,9 @@ public class TaskDaoImpl implements ITaskDao {
         }
         return resultData;
     }
+
+    @Override
+    public void deleteByProjectId(String id) {
+        mapper.deleteByProjectId(id);
+    }
 }

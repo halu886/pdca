@@ -5,6 +5,7 @@ import com.jxufe.halu.model.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProjectMapper {
 
@@ -43,4 +44,16 @@ public interface ProjectMapper {
             "WHERE\n" +
             "\tUSER.UserID = #{id}")
     List<Project> getProjectsOfUser(String id);
+
+    @SelectProvider(type = ProjectProvider.class, method = "queryTable")
+    List<Map> queryTable(@Param("page") int page, @Param("size") int size, @Param("searchParam") String searchParam, @Param("userID") String userID);
+
+    @SelectProvider(type = ProjectProvider.class, method = "countProject")
+    Map countProject( String searchParam,String userID);
+
+    @Delete("DELETE FROM project WHERE project.ProjectID = #{id}")
+    int deleteById(String id);
+
+    @Delete("DELETE FROM mid_user_project WHERE mid_user_project.ProjectID = #{id}")
+    void deleteMidDataById(String id);
 }

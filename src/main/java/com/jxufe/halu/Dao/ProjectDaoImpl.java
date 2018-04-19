@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectDaoImpl  implements  IProjectDao{
     private SqlSessionFactory sessionFactory;
@@ -54,6 +55,23 @@ public class ProjectDaoImpl  implements  IProjectDao{
     }
     public List<Project> getProjectOfUser(String id) {
         return mapper.getProjectsOfUser(id);
+    }
+
+    @Override
+    public List<Map> queryTable(int page, int size, String searchParam,String userID) {
+        return mapper.queryTable(page,size,searchParam,userID);
+    }
+
+    @Override
+    public int countProject(String searchParam, String userID) {
+       Map data =  mapper.countProject(searchParam,userID);
+        return ((Long)data.get("count")).intValue();
+    }
+
+    @Override
+    public int deleteById(String id) {
+        mapper.deleteMidDataById(id);
+        return mapper.deleteById(id);
     }
 
 }
