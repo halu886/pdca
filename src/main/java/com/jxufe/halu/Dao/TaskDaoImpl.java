@@ -116,4 +116,19 @@ public class TaskDaoImpl implements ITaskDao {
     public void deleteByProjectId(String id) {
         mapper.deleteByProjectId(id);
     }
+
+    @Override
+    public int countRootTaskByProjectId(String projectId) {
+        return mapper.countRootTaskByProjectId(projectId);
+    }
+
+    @Override
+    public int deleteByIds(List taskIds) {
+        return mapper.deleteByIds(taskIds);
+    }
+
+    @Override
+    public void deleteById(Object d) {
+         mapper.deleteById(d);
+    }
 }
