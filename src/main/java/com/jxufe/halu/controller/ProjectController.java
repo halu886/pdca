@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -100,7 +101,13 @@ public class ProjectController {
             User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
             int page = Integer.parseInt(request.getParameter("page"));
             int size = Integer.parseInt(request.getParameter("size"));
-            String searchParam = request.getParameter("searchParam");
+
+            String searchParam= request.getParameter("searchParam");
+            if(searchParam != null){
+//                searchParam =   URLDecoder.decode(searchParam,"ISO-8859-1");
+                 searchParam  = new String(searchParam.getBytes("ISO-8859-1"),"UTF-8");
+            }
+
             if (page < 0 || size < 0) {
                 throw new Exception("参数异常");
             }
