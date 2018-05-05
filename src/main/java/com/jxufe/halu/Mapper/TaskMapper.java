@@ -10,8 +10,8 @@ public interface TaskMapper {
     @Select("select * from task where TaskID = #{id}")
     Task findTaskById(String id);
 
-    @Insert("Insert into task(taskId,taskName,createDate,updateDate,taskType,Description,pTaskId,projectId,tno)" +
-            " values(#{taskId},#{taskName},#{createDate},#{updateDate},#{taskType},#{description},#{pTaskId},#{projectId },#{tno})")
+    @Insert("Insert into task(taskId,taskName,createDate,updateDate,taskType,Description,pTaskId,projectId,tno,progress,nodeProgress)" +
+            " values(#{taskId},#{taskName},#{createDate},#{updateDate},#{taskType},#{description},#{pTaskId},#{projectId },#{tno},#{progress},#{nodeProgress})")
     void addTask(Task task);
 
     @Select("select * from task")
@@ -111,7 +111,7 @@ public interface TaskMapper {
             "\t\tINNER JOIN mid_user_project ON `user`.UserID = mid_user_project.UserID\n" +
             "\t\tINNER JOIN task ON mid_user_project.ProjectID = task.ProjectID\n" +
             "\t\tWHERE\n" +
-            "\t\t\t`user`.UserID = #{userID}\n" +
+            "\t\t\t`user`.UserID = #{userID}  AND UpdateDate  IS NOT NULL \n" +
             "\t) AS weekcount\n" +
             "GROUP BY\n" +
             "\tweekcount.type,\n" +
@@ -120,4 +120,13 @@ public interface TaskMapper {
 
     @Delete("DELETE task FROM task WHERE task.ProjectID = #{id}")
     void deleteByProjectId(String id);
+
+    @Select("SELECT COUNT(*) FROM task WHERE ProjectID = #{projectId} AND PTaskID is NULL")
+    int countRootTaskByProjectId(String projectId);
+
+    @DeleteProvider(type = TaskMapperProvider.class,method = "deleteByIds")
+    int deleteByIds(List taskIds);
+
+    @Delete("delete task from task where task.taskID = #{d}")
+    void deleteById(Object d);
 }

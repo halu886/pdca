@@ -24,4 +24,10 @@ public interface ITaskDao {
     Map updateWeekday(String userID);
 
     void deleteByProjectId(String id);
+
+    int countRootTaskByProjectId(String projectId);
+
+    int deleteByIds(List taskIds);
+
+    void deleteById(Object d);
 }

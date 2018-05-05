@@ -9,11 +9,24 @@ import java.util.Map;
 
 public class TaskMapperProvider {
 
+    public  String deleteByIds(Map map){
+        List taskIds = (List) map.get("list");
+        StringBuilder sb = new StringBuilder();
+        sb.append("delete from Task where taskId in ( ");
+        for (Object id :
+                taskIds) {
+            sb.append(id+",");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        sb.append(")");
+        return sb.toString();
+    }
+
     public String insertBatch(Map map){
         List<Task> taskList = (List<Task>)map.get("list");
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO task");
-        sb.append("(TaskName,CreateDate,UpdateDate,TaskType,Description,PTaskID,ProjectID,Tno)");
+        sb.append("(TaskName,CreateDate,UpdateDate,TaskType,Description,PTaskID,ProjectID,Tno,progress,nodeProgress,startDate,endDate)");
         sb.append("VAlUES");
         MessageFormat mf = new MessageFormat("(#'{'list[{0}].taskName}," +
                 "#'{'list[{0}].createDate}," +
@@ -22,7 +35,11 @@ public class TaskMapperProvider {
                 "#'{'list[{0}].description}," +
                 "#'{'list[{0}].pTaskId}," +
                 "#'{'list[{0}].projectId}," +
-                "#'{'list[{0}].tno}" +
+                "#'{'list[{0}].tno}," +
+                "#'{'list[{0}].progress}," +
+                "#'{'list[{0}].nodeProgress}," +
+                "#'{'list[{0}].startDate}," +
+                "#'{'list[{0}].endDate}" +
                 ")");
         for (int i=0;i<taskList.size();i++){
             sb.append(mf.format(new Object[]{i}));

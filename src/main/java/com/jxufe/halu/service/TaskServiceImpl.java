@@ -94,6 +94,7 @@ public class TaskServiceImpl implements ITaskService {
                 queryTask.setTaskType("A");
                 queryTask.setPTaskId(task.getTaskId());
                 List<Task> tasks = this.queryByTask(queryTask);
+                if(tasks.size()==0 )break;
                 Task taskTypeA = tasks.get(0);
                 if (!taskTypeA.getProgress().equals("100")) {
                     return false;
@@ -189,6 +190,38 @@ public class TaskServiceImpl implements ITaskService {
     @Override
     public void deleteByProjectId(String id) {
         taskDao.deleteByProjectId(id);
+    }
+
+    @Override
+    public int countRootTaskByProjectId(String projectId) {
+        return taskDao.countRootTaskByProjectId(projectId);
+    }
+
+    void getTasksId(List tree,String taskId,List taskIds,boolean isChild){
+        for (Object node :
+                tree) {
+            Task task = (Task) ((Tree)node).getT();
+            if(isChild||task.getTaskId().equals(taskId)){
+                taskIds.add(task.getTaskId());
+                getTasksId(((Tree)node).getChildNodes(),taskId,taskIds,true);
+            }else{
+                getTasksId(((Tree)node).getChildNodes(),taskId,taskIds,false);
+            }
+        }
+    }
+
+    @Override
+    public int deleteNodeByTaskId(String taskId) {
+        Task task  = findTaskById(taskId);
+        List<Tree<Task>> tree = getTaskTreeByProjectId(task.getProjectId());
+        List taskIds = new ArrayList();
+        getTasksId(tree,taskId,taskIds,false);
+        Collections.reverse(taskIds);
+        for (Object d:
+                taskIds) {
+            taskDao.deleteById(d);
+        }
+        return taskDao.deleteByIds(taskIds);
     }
 
 //    /**

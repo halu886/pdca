@@ -30,5 +30,9 @@ public interface ITaskService {
 
     void deleteByProjectId(String id);
 
+    int countRootTaskByProjectId(String projectId);
+
+    int deleteNodeByTaskId(String taskId);
+
 //    boolean canAdd(String taskId);
 }

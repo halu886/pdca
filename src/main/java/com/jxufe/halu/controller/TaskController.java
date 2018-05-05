@@ -71,25 +71,27 @@ public class TaskController {
         }
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public @ResponseBody
-    Map update(@RequestBody Task task) {
+    Map update(@RequestBody Map task) {
         Map<String, Object> rs = new HashMap<String, Object>();
         rs.put("status", false);
         rs.put("message", "更新失败");
         try {
-            Task databaseTask = service.findTaskById(task.getTaskId());
+            Task databaseTask = service.findTaskById((String) task.get("taskId"));
             if (!(databaseTask instanceof Task)) throw new Exception("更新异常");
-            Task updateTask = new Task(task.getTaskId(),
-                    task.getTaskName(),
+            Task updateTask = new Task((String) task.get("taskId"),
+                    (String) task.get("name"),
                     databaseTask.getCreateDate(),
-                    task.getUpdateDate(),
+                    DateUtil.getCurrentTimestamp(),
                     databaseTask.getTaskType(),
-                    task.getDescription(),
+                    (String) task.get("description"),
                     databaseTask.getPTaskId(),
                     databaseTask.getProjectId(),
                     databaseTask.getTno()
             );
+            updateTask.setNodeProgress(databaseTask.getNodeProgress());
+            updateTask.setProgress(databaseTask.getProgress());
             int updateNum = service.updateTask(updateTask);
             if (updateNum != 1) throw new Exception("添加异常");
             rs.put("status", true);
@@ -115,7 +117,7 @@ public class TaskController {
             String childDescriptionKey = "description";
             Task typeTask = new Task();
             int increateRs = 0;
-            switch (type.toLowerCase()) {
+            switch (type.toUpperCase()) {
                 case "T":
                     if (service.isHasChild(pTaskId)) {
                         break;
@@ -188,7 +190,7 @@ public class TaskController {
                     typeTask.setTno(service.numChild(pTaskId) + 1);
                     service.addTask(typeTask);
                     break;
-                case"r":
+                case"R":
                     Task rootTask = new Task();
                     projectId = (String) body.get("projectId");
                     rootTask.setTaskType("T");
