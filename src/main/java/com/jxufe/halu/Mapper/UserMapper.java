@@ -106,4 +106,14 @@ public interface UserMapper {
                 "\t\t\tproject.ProjectID\n" +
                 "\t) AS a")
     int countOfHandleProject(String userID);
+
+    @Select("SELECT\n" +
+            "\t*\n" +
+            "FROM\n" +
+            "\t`user`\n" +
+            "INNER JOIN mid_user_role ON `user`.UserID = mid_user_role.UserID\n" +
+            "INNER JOIN role ON role.RoleID = mid_user_role.RoleID\n" +
+            "WHERE\n" +
+            "\trole.RoleName = #{role}")
+    List<User> findUserByRole(String role);
 }

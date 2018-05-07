@@ -22,4 +22,6 @@ public interface IUserService {
     User findUserByName(String username);
 
     Map countOfIndex(String userID);
+
+    List<User> findUserByRole(String normalUser);
 }

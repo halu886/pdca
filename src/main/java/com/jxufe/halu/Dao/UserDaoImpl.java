@@ -100,5 +100,10 @@ public class UserDaoImpl implements IUserDao {
         return countType;
     }
 
+    @Override
+    public List<User> findUserByRole(String role) {
+        return mapper.findUserByRole(role);
+    }
+
 
 }

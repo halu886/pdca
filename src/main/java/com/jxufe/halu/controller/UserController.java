@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,5 +61,22 @@ public class UserController {
             result.put("message","注册异常");
         }
         return result;
+    }
+
+    @RequestMapping(value = "/showUser",method = RequestMethod.GET)
+    public @ResponseBody
+    Map<String,Object> showUser(){
+        Map result = new HashMap();
+        result.put("status",false);
+        result.put("message","查询失败");
+        try{
+            List<User> users = service.findUserByRole("normalUser");
+            result.put("data",users);
+            result.put("status",true);
+            result.put("message","查询成功");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  result;
     }
 }

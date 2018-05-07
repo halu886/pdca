@@ -34,10 +34,12 @@ public class ProcessInterceptor implements HandlerInterceptor {
             return false;
         }
         Object user = SecurityUtils.getSubject().getSession().getAttribute("user");
-        if(!(((HandlerMethod)o).getBean() instanceof LoginController)){
-            if(!(user instanceof  User && ((User) user).getUserID() != null && !((User)user).getUserID().equals(""))){
-                httpServletResponse.setStatus(401);
-                return false;
+        if(o instanceof  HandlerMethod){
+            if(!(((HandlerMethod)o).getBean() instanceof LoginController)){
+                if(!(user instanceof  User && ((User) user).getUserID() != null && !((User)user).getUserID().equals(""))){
+                    httpServletResponse.setStatus(401);
+                    return false;
+                }
             }
         }
         return true;

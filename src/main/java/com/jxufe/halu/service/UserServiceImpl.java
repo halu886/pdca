@@ -73,6 +73,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public List<User> findUserByRole(String normalUser) {
+        return userDao.findUserByRole(normalUser);
+    }
+
+    @Override
     public boolean register(User user, String roleName) {
         String userId = this.addUser(user);
         Role role = roleDao.findRoleByName(roleName);

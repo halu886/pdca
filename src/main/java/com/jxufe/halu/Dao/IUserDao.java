@@ -24,4 +24,6 @@ public interface IUserDao {
     Map countOfProject(String userID);
 
     Map countOfTask(String userID);
+
+    List<User> findUserByRole(String normalUser);
 }
