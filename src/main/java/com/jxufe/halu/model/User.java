@@ -6,7 +6,6 @@ public class User {
     private  String userID;
     private  String username;
     private  String password;
-    private  List<Project> projects;
 
     public String getUserID() {
         return userID;
@@ -30,14 +29,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
     }
 
     public User(String username, String password) {

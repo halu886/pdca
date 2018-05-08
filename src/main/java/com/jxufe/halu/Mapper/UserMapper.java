@@ -46,7 +46,7 @@ public interface UserMapper {
             "VALUES(#{0},#{1})")
     int addRoleOfUser(String userId, String roleId);
 
-    @Select("select * from user where userName = #{0}")
+    @Select("select * from user where userName = #{username}")
     User findUserByName(String username);
 
     @Select("SELECT\n" +

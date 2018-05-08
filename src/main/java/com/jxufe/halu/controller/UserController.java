@@ -42,18 +42,18 @@ public class UserController {
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public @ResponseBody
-    Map<String,Object> toRegister(@RequestBody User user){
+    Map<String,Object> toRegister(@RequestBody Map user){
         Map<String,Object> result = new HashMap<>();
         result.put("status",false);
         result.put("message","查询失败");
         try{
             User  addUser = new User();
-            addUser.setUsername(user.getUsername());
-            addUser.setPassword(user.getPassword());
+            addUser.setUsername((String) user.get("name"));
+            addUser.setPassword((String) user.get("password"));
             if(addUser.getUsername().trim().equals("")||addUser.getPassword().trim().equals("")){
                 throw  new Exception("用户参数异常");
             }
-            service.register(addUser,"normalUser");
+            service.register(addUser,(String)user.get("role"));
             result.put("status",true);
             result.put("message","查询成功");
         }catch (Exception e){
